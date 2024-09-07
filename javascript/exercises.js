@@ -17,8 +17,8 @@ export function change(amount) {
 // Write your first then lower case function here
 export function firstThenLowerCase(sentence, predicate) {
   for(let i=0; i<sentence.length; i++) {
-    if(predicate(sentence[i].toLowerCase())) {
-      return sentence[i].toLowerCase()
+    if(predicate(sentence[i]?.toLowerCase())) {
+      return sentence[i]?.toLowerCase()
     }
   } return undefined
 }
@@ -117,6 +117,7 @@ export class Quaternion {
     }
     return ret
   }
+
 
   plus(q2) {
     return new Quaternion(this.a+q2.a,this.b+q2.b,this.c+q2.c,this.d+q2.d)
