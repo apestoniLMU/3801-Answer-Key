@@ -1,6 +1,12 @@
-# Homework Template for CMSI 3801
+# CMSI 3801 Homework - Pesto & Co.
 
-Welcome!
+**Group Members:** 
+
+* Axel Pestoni (@[apestoniLMU](https://github.com/apestoniLMU))
+* Sam Reitich (@[sreitich](https://github.com/sreitich))
+* Eren Unsal (@[Cyrendex](https://github.com/Cyrendex))
+
+**Homework 1:** @TODO
 
 ## Instructions
 
