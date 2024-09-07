@@ -56,34 +56,35 @@ def meaningful_line_count(file_name: str):
     file.close() # Tried to nest this in a finally: block but that messes things up..?
     return line_count
 
-TQuaternion = TypeVar("TQuaternion", bound="Quaternion") # Courtesy of https://peps.python.org/pep-0673/
 # Write your Quaternion class here
 @dataclass(frozen=True)
 class Quaternion:
-    a: float = field
-    b: float = field
-    c: float = field
-    d: float = field
+    a: float 
+    b: float 
+    c: float 
+    d: float
 
-    def __eq__(self: TQuaternion, q2: TQuaternion):
+    def __eq__(self: "Quaternion", q2: object) -> bool:
+        if not isinstance(q2, Quaternion): # Yanked this part off ChatGPT to resolve mypy conflict
+            return NotImplemented
         return self.a == q2.a and self.b == q2.b and self.c == q2.c and self.d == q2.d
     
-    def __add__(self: TQuaternion, q2: TQuaternion): 
-        temp_quaternion: TQuaternion = Quaternion(self.a + q2.a, self.b + q2.b, self.c + q2.c, self.d + q2.d)
+    def __add__(self: "Quaternion", q2: "Quaternion"): 
+        temp_quaternion: "Quaternion" = Quaternion(self.a + q2.a, self.b + q2.b, self.c + q2.c, self.d + q2.d)
         return temp_quaternion
     
     # Formula courtesy of https://stackoverflow.com/questions/19956555/how-to-multiply-two-quaternions
-    def __mul__(self: TQuaternion, q2: TQuaternion):
+    def __mul__(self: "Quaternion", q2: "Quaternion"):
         new_a, new_b, new_c, new_d = (
         self.a * q2.a - self.b * q2.b - self.c * q2.c - self.d * q2.d,  # 1
         self.a * q2.b + self.b * q2.a + self.c * q2.d - self.d * q2.c,  # i
         self.a * q2.c - self.b * q2.d + self.c * q2.a + self.d * q2.b,  # j
         self.a * q2.d + self.b * q2.c - self.c * q2.b + self.d * q2.a   # k
         )
-        temp_quaternion: TQuaternion = Quaternion(new_a, new_b, new_c, new_d)
+        temp_quaternion: "Quaternion" = Quaternion(new_a, new_b, new_c, new_d)
         return temp_quaternion
     
-    def __str__(self: TQuaternion):
+    def __str__(self: "Quaternion"):
         final_str = ""
         final_str += "" if self.a == 0 else str(self.a)
         final_str += "" if self.b == 0 else (("+" if (self.b > 0.0 and final_str != "") else "") + (str(self.b) if abs(self.b) - 1.0 != 0.0 else ("-" if self.b == -1.0 else ""))) + "i"
@@ -91,14 +92,14 @@ class Quaternion:
         final_str += "" if self.d == 0 else (("+" if (self.d > 0.0 and final_str != "") else "") + (str(self.d) if abs(self.d) - 1.0 != 0.0 else ("-" if self.d == -1.0 else ""))) + "k"
         return final_str if final_str != "" else "0"
     
-    def __print__(self: TQuaternion):
+    def __print__(self: "Quaternion"):
         print(self.__str__())
 
     @property
-    def conjugate(self: TQuaternion):
-        temp_quaternion: TQuaternion = Quaternion(self.a, -self.b, -self.c, -self.d)
+    def conjugate(self: "Quaternion"):
+        temp_quaternion: "Quaternion" = Quaternion(self.a, -self.b, -self.c, -self.d)
         return temp_quaternion
 
     @property
-    def coefficients(self: TQuaternion):
+    def coefficients(self: "Quaternion"):
         return (self.a, self.b, self.c, self.d)
