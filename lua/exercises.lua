@@ -13,7 +13,16 @@ function change(amount)
   return counts
 end
 
--- Write your first then lower case function here
+-- Returns a lowercased version of the first string in the given list that satisfies the given predicate.
+function first_then_lower_case(strings, predicate)
+  for _, str in ipairs(strings) do
+    if predicate(str) then
+      return string.lower(str)
+    end
+  end
+
+  return nil
+end
 
 -- Write your powers generator here
 

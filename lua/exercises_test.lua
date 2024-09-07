@@ -51,13 +51,13 @@ expect_hash_equals(change(10000000000005), {[25]=400000000000, [10]=0, [5]=1, [1
 
 -- Uncomment the following tests as you complete the exercises
 
--- suite("first_then_lower_case")
--- function nonEmpty(s) return s ~= "" end
--- function lengthGreaterThan3(s) return #s > 3 end
--- expect(first_then_lower_case({}, nonEmpty) == nil)
--- expect(first_then_lower_case({"", "A", "B"}, nonEmpty) == "a")
--- expect(first_then_lower_case({"", "A", "ABC"}, lengthGreaterThan3) == nil)
--- expect(first_then_lower_case({"ABC", "ABCD", "ABCDE"}, lengthGreaterThan3) == "abcd")
+ suite("first_then_lower_case")
+ function nonEmpty(s) return s ~= "" end
+ function lengthGreaterThan3(s) return #s > 3 end
+ expect(first_then_lower_case({}, nonEmpty) == nil)
+ expect(first_then_lower_case({"", "A", "B"}, nonEmpty) == "a")
+ expect(first_then_lower_case({"", "A", "ABC"}, lengthGreaterThan3) == nil)
+ expect(first_then_lower_case({"ABC", "ABCD", "ABCDE"}, lengthGreaterThan3) == "abcd")
 
 -- suite("powers_generator")
 -- gen = powers_generator(3, 100)
