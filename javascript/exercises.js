@@ -109,7 +109,7 @@ export class Quaternion {
     Object.freeze(this)
   }
 
-  /** Returns a mathematical representation of this quaternion, ignoring any zero-values. */
+  /** Returns a mathematical representation of this quaternion, ignoring any zero-coefficients. */
   toString() {
     let str = [];
     let ret = ""
@@ -166,21 +166,21 @@ export class Quaternion {
   }
 
   /** Adds two quaternions. */
-  plus(q2) {
+  plus(other) {
     return new Quaternion(
-        this.a + q2.a,
-        this.b + q2.b,
-        this.c + q2.c,
-        this.d + q2.d)
+        this.a + other.a,
+        this.b + other.b,
+        this.c + other.c,
+        this.d + other.d)
   }
 
   /** Multiplies two quaternions. */
-  times(q2) {
+  times(other) {
     return new Quaternion(
-      (this.a*q2.a - this.b*q2.b - this.c*q2.c - this.d*q2.d),
-      (this.a*q2.b + this.b*q2.a + this.c*q2.d - this.d*q2.c),
-      (this.a*q2.c - this.b*q2.d + this.c*q2.a + this.d*q2.b),
-      (this.a*q2.d + this.b*q2.c - this.c*q2.b + this.d*q2.a)
+      (this.a*other.a - this.b*other.b - this.c*other.c - this.d*other.d),
+      (this.a*other.b + this.b*other.a + this.c*other.d - this.d*other.c),
+      (this.a*other.c - this.b*other.d + this.c*other.a + this.d*other.b),
+      (this.a*other.d + this.b*other.c - this.c*other.b + this.d*other.a)
     );
   }
 
@@ -189,7 +189,7 @@ export class Quaternion {
     return [this.a, this.b, this.c, this.d]
   }
 
-  /** Computes the conjugate of two quaternions. */
+  /** Computes the conjugate of this quaternion. */
   get conjugate() {
     return new Quaternion(
         this.a,
@@ -199,11 +199,11 @@ export class Quaternion {
   }
 
   /** Two quaternions are equal if each of their coefficients are equivalent. */
-  equals(q2) {
+  equals(other) {
     return (
-        this.a === q2.a &&
-        this.b === q2.b &&
-        this.c === q2.c &&
-        this.d === q2.d)
+        this.a === other.a &&
+        this.b === other.b &&
+        this.c === other.c &&
+        this.d === other.d)
   }
 }
