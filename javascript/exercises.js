@@ -29,14 +29,14 @@ export function firstThenLowerCase(sentence, predicate) {
  * Returns a generator producing the powers of the base specified by baseAndMax, up to but not exceeding the specified
  * maximum value.
  *
- * @param {number} baseAndMax.ofBase        Base from which to generate sequential powers.
- * @param {number} baseAndMax.upTo          Maximum value to which powers will be generated.
- * @returns {Generator<number>}             Generator producing sequential powers of baseAndMax.ofBase.
+ * @param {number} ofBase         Base from which to generate sequential powers.
+ * @param {number} upTo           Maximum value to which powers will be generated.
+ * @returns {Generator<number>}   Generator producing sequential powers of baseAndMax.ofBase.
  */
-export function* powersGenerator(baseAndMax) {
+export function* powersGenerator({ofBase, upTo}) {
   let index = 0
-  while ((baseAndMax.ofBase ** index) <= baseAndMax.upTo) {
-    yield baseAndMax.ofBase ** index++
+  while ((ofBase ** index) <= upTo) {
+    yield ofBase ** index++
   }
 }
 
