@@ -1,6 +1,6 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from collections.abc import Callable
-from typing import Generator, Optional, TypeVar
+from typing import Generator, Optional
 
 
 def change(amount: int) -> dict[int, int]:

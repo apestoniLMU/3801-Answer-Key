@@ -184,7 +184,7 @@ export class Quaternion {
     );
   }
 
-  /** Returns a list of this quaternion's coeffeicients. */
+  /** Returns a list of this quaternion's coefficients. */
   get coefficients() {
     return [this.a, this.b, this.c, this.d]
   }
