@@ -24,10 +24,163 @@ function first_then_lower_case(strings, predicate)
   return nil
 end
 
--- Write your powers generator here
+-- Returns a generator that returns the successive powers of the given base, up to but not including the given limit.
+function powers_generator(base, limit)
+  local power = 1
+  -- Create the generator.
+  return coroutine.create(function()
+    -- Yield and raise the power until reaching the limit.
+    while power <= limit do
+      coroutine.yield(power)
+      power = power * base
+    end
+  end)
+end
 
--- Write your say function here
+-- Chainable function that concatenates the strings given in sequential calls, until no string is passed.
+function say(word)
+  -- If no word is given, return an empty string.
+  if word == nil then
+    return ""
+  end
+
+  -- Recursive function: when given nothing, returns the words passed to the say function chain. Otherwise, makes a
+  -- recursive call concatenating the given string.
+  return function(next)
+    if next == nil then
+      return word
+    else
+      return say(word .. " " .. next)
+    end
+  end
+end
 
 -- Write your line count function here
+function meaningful_line_count(file_path)
+  -- Open the file.
+  file = io.open(file_path, "r")
 
--- Write your Quaternion table here
+  -- Ensure the file exists.
+  if file == nil then
+    error("No such file")
+  end
+
+  count = 0
+  for line in file:lines() do
+    -- Trim whitespace
+    line = string.gsub(line, "%s", "")
+
+    -- Count line if it's NOT (1) whitespace or (2) first char is '#'.
+    if (line ~= "") and (string.sub(line, 1, 1) ~= '#') then
+      count = count + 1
+    end
+  end
+
+  file:close()
+
+  return count
+end
+
+-- Table declaration.
+Quaternion = {}
+Quaternion.mt = {}
+
+-- Constructor.
+function Quaternion.new(x, y, z, w)
+  local quaternion = {}
+  setmetatable(quaternion, Quaternion.mt)
+
+  quaternion.a = x
+  quaternion.b = y
+  quaternion.c = z
+  quaternion.d = w
+
+  return quaternion
+end
+
+-- Add.
+function Quaternion.addQuat(q1, q2)
+  local q = Quaternion.new
+  (
+  q1.a + q2.a,
+  q1.b + q2.b,
+  q1.c + q2.c,
+  q1.d + q2.d
+  )
+  return q
+end
+
+Quaternion.mt.__add = Quaternion.addQuat
+
+-- Multiply.
+function Quaternion.multQuat(q1, q2)
+  return Quaternion.new
+  (
+  q1.a * q2.a - q1.b * q2.b - q1.c * q2.c - q1.d * q2.d,      -- 1
+  q1.a * q2.b + q1.b * q2.a + q1.c * q2.d - q1.d * q2.c,      -- i
+  q1.a * q2.c - q1.b * q2.d + q1.c * q2.a + q1.d * q2.b,      -- j
+  q1.a * q2.d + q1.b * q2.c - q1.c * q2.b + q1.d * q2.a       -- k
+  )
+end
+
+Quaternion.mt.__mul = Quaternion.multQuat
+
+-- String.
+function Quaternion.tostring(quaternion)
+  local str = ""
+
+  -- 1
+  if quaternion.a ~= 0 then
+    str = str .. quaternion.a
+  end
+
+  function format_component(value, char)
+    if value ~= 0 then
+      if str ~= "" then
+        str = str .. "+"
+      end
+
+      if math.abs(value) - 1 ~= 0 then
+        str = str .. value
+      else
+        if value == -1 then
+          str = str .. "-"
+        end
+      end
+
+      str = str .. char
+    end
+  end
+
+  return str
+end
+
+Quaternion.mt.__tostring = Quaternion.tostring
+
+-- Returns the coefficients.
+function Quaternion:coefficients()
+  return { self.a, self.b, self.c, self.d }
+end
+
+-- Returns the conjugate.
+function Quaternion.conjugate(quaternion)
+  return Quaternion.new
+  (
+    quaternion.a,
+    -quaternion.b,
+    -quaternion.c,
+    -quaternion.d
+  )
+end
+
+-- Equality.
+function Quaternion.equalQual(q1, q2)
+  return (
+    q1.a == q2.a and
+    q1.b == q2.b and
+    q1.c == q2.c and
+    q1.d == q2.d
+  )
+end
+
+Quaternion.mt.__eq = Quaternion.equalQual
