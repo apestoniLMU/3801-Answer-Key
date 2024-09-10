@@ -32,7 +32,7 @@ def powers_generator(*, base: int, limit: int) -> Generator[int, None, type[Stop
     while True:
         current_num = base ** power
         if current_num > limit:
-            return StopIteration
+            return # Implicitly raises stop iteration
         else:
             power += 1
             yield current_num
