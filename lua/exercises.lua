@@ -127,32 +127,55 @@ Quaternion.mt.__mul = Quaternion.multQuat
 
 -- String.
 function Quaternion.tostring(quaternion)
-  local str = ""
+  local str = {}
+  local ret = ""
 
-  -- 1
+  -- Special formatting for the first coefficient.
   if quaternion.a ~= 0 then
-    str = str .. quaternion.a
+    table.insert(str, quaternion.a)
   end
 
-  function format_component(value, char)
-    if value ~= 0 then
-      if str ~= "" then
-        str = str .. "+"
+  -- Helper for formatting a single coefficient.
+  function format_coefficient(value, symbol)
+    if value == 0 then
+      return
+    end
+
+    if value > 0 then
+      if #str > 0 then
+        table.insert(str, "+")
       end
 
-      if math.abs(value) - 1 ~= 0 then
-        str = str .. value
+      if value == 1 then
+        table.insert(str, symbol)
       else
-        if value == -1 then
-          str = str .. "-"
-        end
+        table.insert(str, value .. symbol)
       end
-
-      str = str .. char
+    else
+      if value == -1 then
+        table.insert(str, "-" .. symbol)
+      else
+        table.insert(str, value .. symbol)
+      end
     end
   end
 
-  return str
+  -- Format 2nd, 3rd, and 4th coefficients.
+  format_coefficient(quaternion.b, "i")
+  format_coefficient(quaternion.c, "j")
+  format_coefficient(quaternion.d, "k")
+
+  -- Special case for all zeroes.
+  if #str == 0 then
+    return "0"
+  end
+
+  -- Build final string.
+  for _, word in ipairs(str) do
+    ret = ret .. word
+  end
+
+  return ret
 end
 
 Quaternion.mt.__tostring = Quaternion.tostring
@@ -163,13 +186,13 @@ function Quaternion:coefficients()
 end
 
 -- Returns the conjugate.
-function Quaternion.conjugate(quaternion)
+function Quaternion:conjugate()
   return Quaternion.new
   (
-    quaternion.a,
-    -quaternion.b,
-    -quaternion.c,
-    -quaternion.d
+    self.a,
+    -self.b,
+    -self.c,
+    -self.d
   )
 end
 
