@@ -82,128 +82,107 @@ function meaningful_line_count(file_path)
 end
 
 -- Table declaration.
-Quaternion = {}
-Quaternion.mt = {}
+Quaternion = (function (class)
+  class.new = function (x, y, z, w)
+    return setmetatable({a = x, b = y, c = z, d = w}, {
+      __index = {
+        coefficients = function(self)
+          return { self.a, self.b, self.c, self.d }
+        end,
 
--- Constructor.
-function Quaternion.new(x, y, z, w)
-  local quaternion = {}
-  setmetatable(quaternion, Quaternion.mt)
+        conjugate = function(self)
+          return class.new
+          (
+            self.a,
+            -self.b,
+            -self.c,
+            -self.d
+          )
+        end
+      },
 
-  quaternion.a = x
-  quaternion.b = y
-  quaternion.c = z
-  quaternion.d = w
+      __add = function(self, other)
+        return class.new
+        (
+          self.a + other.a,
+          self.b + other.b,
+          self.c + other.c,
+          self.d + other.d
+        )
+      end,
 
-  return quaternion
-end
+      __mul = function(self, other)
+        return class.new
+        (
+        self.a * other.a - self.b * other.b - self.c * other.c - self.d * other.d,      -- 1
+        self.a * other.b + self.b * other.a + self.c * other.d - self.d * other.c,      -- i
+        self.a * other.c - self.b * other.d + self.c * other.a + self.d * other.b,      -- j
+        self.a * other.d + self.b * other.c - self.c * other.b + self.d * other.a       -- k
+        )
+      end,
 
--- Add.
-function Quaternion.addQuat(q1, q2)
-  local q = Quaternion.new
-  (
-  q1.a + q2.a,
-  q1.b + q2.b,
-  q1.c + q2.c,
-  q1.d + q2.d
-  )
-  return q
-end
+      __eq = function(self, other)
+        return
+        (
+          self.a == other.a and
+          self.b == other.b and
+          self.c == other.c and
+          self.d == other.d
+        )
+      end,
 
-Quaternion.mt.__add = Quaternion.addQuat
+      __tostring = function(self)
+        local str = {}
+        local ret = ""
 
--- Multiply.
-function Quaternion.multQuat(q1, q2)
-  return Quaternion.new
-  (
-  q1.a * q2.a - q1.b * q2.b - q1.c * q2.c - q1.d * q2.d,      -- 1
-  q1.a * q2.b + q1.b * q2.a + q1.c * q2.d - q1.d * q2.c,      -- i
-  q1.a * q2.c - q1.b * q2.d + q1.c * q2.a + q1.d * q2.b,      -- j
-  q1.a * q2.d + q1.b * q2.c - q1.c * q2.b + q1.d * q2.a       -- k
-  )
-end
+        -- Special formatting for the first coefficient.
+        if self.a ~= 0 then
+          table.insert(str, self.a)
+        end
 
-Quaternion.mt.__mul = Quaternion.multQuat
+        -- Helper for formatting a single coefficient.
+        function format_coefficient(value, symbol)
+          if value == 0 then
+            return
+          end
 
--- String.
-function Quaternion.tostring(quaternion)
-  local str = {}
-  local ret = ""
+          if value > 0 then
+            if #str > 0 then
+              table.insert(str, "+")
+            end
 
-  -- Special formatting for the first coefficient.
-  if quaternion.a ~= 0 then
-    table.insert(str, quaternion.a)
-  end
+            if value == 1 then
+              table.insert(str, symbol)
+            else
+              table.insert(str, value .. symbol)
+            end
+          else
+            if value == -1 then
+              table.insert(str, "-" .. symbol)
+            else
+              table.insert(str, value .. symbol)
+            end
+          end
+        end
 
-  -- Helper for formatting a single coefficient.
-  function format_coefficient(value, symbol)
-    if value == 0 then
-      return
-    end
+        -- Format 2nd, 3rd, and 4th coefficients.
+        format_coefficient(self.b, "i")
+        format_coefficient(self.c, "j")
+        format_coefficient(self.d, "k")
 
-    if value > 0 then
-      if #str > 0 then
-        table.insert(str, "+")
+        -- Special case for all zeroes.
+        if #str == 0 then
+          return "0"
+        end
+
+        -- Build final string.
+        for _, word in ipairs(str) do
+          ret = ret .. word
+        end
+
+        return ret
       end
-
-      if value == 1 then
-        table.insert(str, symbol)
-      else
-        table.insert(str, value .. symbol)
-      end
-    else
-      if value == -1 then
-        table.insert(str, "-" .. symbol)
-      else
-        table.insert(str, value .. symbol)
-      end
-    end
+    })
   end
-
-  -- Format 2nd, 3rd, and 4th coefficients.
-  format_coefficient(quaternion.b, "i")
-  format_coefficient(quaternion.c, "j")
-  format_coefficient(quaternion.d, "k")
-
-  -- Special case for all zeroes.
-  if #str == 0 then
-    return "0"
-  end
-
-  -- Build final string.
-  for _, word in ipairs(str) do
-    ret = ret .. word
-  end
-
-  return ret
-end
-
-Quaternion.mt.__tostring = Quaternion.tostring
-
--- Returns the coefficients.
-function Quaternion:coefficients()
-  return { self.a, self.b, self.c, self.d }
-end
-
--- Returns the conjugate.
-function Quaternion:conjugate()
-  return Quaternion.new
-  (
-    self.a,
-    -self.b,
-    -self.c,
-    -self.d
-  )
-end
-
--- Equality.
-function Quaternion.equalQual(q1, q2)
-  return (
-    q1.a == q2.a and
-    q1.b == q2.b and
-    q1.c == q2.c and
-    q1.d == q2.d
-  )
-end
-
-Quaternion.mt.__eq = Quaternion.equalQual
+  return class
+end)({})
