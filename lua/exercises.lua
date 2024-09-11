@@ -81,108 +81,116 @@ function meaningful_line_count(file_path)
   return count
 end
 
--- Table declaration.
-Quaternion = (function (class)
-  class.new = function (x, y, z, w)
-    return setmetatable({a = x, b = y, c = z, d = w}, {
-      __index = {
-        coefficients = function(self)
-          return { self.a, self.b, self.c, self.d }
-        end,
+-- Metatable.
+Quaternion = {}
+quaternion_mt = {
+  __index = {
 
-        conjugate = function(self)
-          return class.new
-          (
-            self.a,
-            -self.b,
-            -self.c,
-            -self.d
-          )
-        end
-      },
+    -- Returns this quaternion's coefficients in a table.
+    coefficients = function(self)
+      return { self.a, self.b, self.c, self.d }
+    end,
 
-      __add = function(self, other)
-        return class.new
-        (
-          self.a + other.a,
-          self.b + other.b,
-          self.c + other.c,
-          self.d + other.d
-        )
-      end,
+    -- Returns this quaternion's conjugate.
+    conjugate = function(self)
+      return Quaternion.new
+      (
+        self.a,
+        -self.b,
+        -self.c,
+        -self.d
+      )
+    end
+  },
 
-      __mul = function(self, other)
-        return class.new
-        (
-        self.a * other.a - self.b * other.b - self.c * other.c - self.d * other.d,      -- 1
-        self.a * other.b + self.b * other.a + self.c * other.d - self.d * other.c,      -- i
-        self.a * other.c - self.b * other.d + self.c * other.a + self.d * other.b,      -- j
-        self.a * other.d + self.b * other.c - self.c * other.b + self.d * other.a       -- k
-        )
-      end,
+  -- Add.
+  __add = function(self, other)
+    return Quaternion.new
+    (
+      self.a + other.a,
+      self.b + other.b,
+      self.c + other.c,
+      self.d + other.d
+    )
+  end,
 
-      __eq = function(self, other)
+  -- Multiply.
+  __mul = function(self, other)
+    return Quaternion.new
+    (
+      self.a * other.a - self.b * other.b - self.c * other.c - self.d * other.d,      -- 1
+      self.a * other.b + self.b * other.a + self.c * other.d - self.d * other.c,      -- i
+      self.a * other.c - self.b * other.d + self.c * other.a + self.d * other.b,      -- j
+      self.a * other.d + self.b * other.c - self.c * other.b + self.d * other.a       -- k
+    )
+  end,
+
+  -- Equality.
+  __eq = function(self, other)
+    return
+    (
+      self.a == other.a and
+      self.b == other.b and
+      self.c == other.c and
+      self.d == other.d
+    )
+  end,
+
+  -- To-string.
+  __tostring = function(self)
+    local str = {}
+    local ret = ""
+
+    -- Special formatting for the first coefficient.
+    if self.a ~= 0 then
+      table.insert(str, self.a)
+    end
+
+    -- Helper for formatting a single coefficient.
+    function format_coefficient(value, symbol)
+      if value == 0 then
         return
-        (
-          self.a == other.a and
-          self.b == other.b and
-          self.c == other.c and
-          self.d == other.d
-        )
-      end,
-
-      __tostring = function(self)
-        local str = {}
-        local ret = ""
-
-        -- Special formatting for the first coefficient.
-        if self.a ~= 0 then
-          table.insert(str, self.a)
-        end
-
-        -- Helper for formatting a single coefficient.
-        function format_coefficient(value, symbol)
-          if value == 0 then
-            return
-          end
-
-          if value > 0 then
-            if #str > 0 then
-              table.insert(str, "+")
-            end
-
-            if value == 1 then
-              table.insert(str, symbol)
-            else
-              table.insert(str, value .. symbol)
-            end
-          else
-            if value == -1 then
-              table.insert(str, "-" .. symbol)
-            else
-              table.insert(str, value .. symbol)
-            end
-          end
-        end
-
-        -- Format 2nd, 3rd, and 4th coefficients.
-        format_coefficient(self.b, "i")
-        format_coefficient(self.c, "j")
-        format_coefficient(self.d, "k")
-
-        -- Special case for all zeroes.
-        if #str == 0 then
-          return "0"
-        end
-
-        -- Build final string.
-        for _, word in ipairs(str) do
-          ret = ret .. word
-        end
-
-        return ret
       end
-    })
+
+      if value > 0 then
+        if #str > 0 then
+          table.insert(str, "+")
+        end
+
+        if value == 1 then
+          table.insert(str, symbol)
+        else
+          table.insert(str, value .. symbol)
+        end
+      else
+        if value == -1 then
+          table.insert(str, "-" .. symbol)
+        else
+          table.insert(str, value .. symbol)
+        end
+      end
+    end
+
+    -- Format 2nd, 3rd, and 4th coefficients.
+    format_coefficient(self.b, "i")
+    format_coefficient(self.c, "j")
+    format_coefficient(self.d, "k")
+
+    -- Special case for all zeroes.
+    if #str == 0 then
+      return "0"
+    end
+
+    -- Build final string.
+    for _, word in ipairs(str) do
+      ret = ret .. word
+    end
+
+    return ret
   end
-  return class
-end)({})
+}
+
+-- Quaternion constructor. Links the "class" metatable.
+Quaternion.new = function (x, y, z, w)
+    return setmetatable({a = x, b = y, c = z, d = w}, quaternion_mt)
+end
