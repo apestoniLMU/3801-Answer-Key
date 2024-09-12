@@ -24,12 +24,11 @@ function first_then_lower_case(strings, predicate)
   return nil
 end
 
--- Returns a generator that returns the successive powers of the given base, up to but not including the given limit.
+-- Returns a generator that returns the successive powers of the given base, up to but not exceeding the given limit.
 function powers_generator(base, limit)
   local power = 1
-  -- Create the generator.
   return coroutine.create(function()
-    -- Yield and raise the power until reaching the limit.
+    -- Yield and raise the power until the limit is reached.
     while power <= limit do
       coroutine.yield(power)
       power = power * base
@@ -55,12 +54,11 @@ function say(word)
   end
 end
 
--- Write your line count function here
+-- Returns the number of lines in the given file that are NOT (1) empty, (2) entirely whitespace, or (3) whose first
+-- character is '#'.
 function meaningful_line_count(file_path)
-  -- Open the file.
+  -- Open the file; throw an error if it can't be found.
   file = io.open(file_path, "r")
-
-  -- Ensure the file exists.
   if file == nil then
     error("No such file")
   end
@@ -70,7 +68,7 @@ function meaningful_line_count(file_path)
     -- Trim whitespace
     line = string.gsub(line, "%s", "")
 
-    -- Count line if it's NOT (1) whitespace or (2) first char is '#'.
+    -- Count line if it's NOT (1) whitespace or (2) its first (trimmed) character is '#'.
     if (line ~= "") and (string.sub(line, 1, 1) ~= '#') then
       count = count + 1
     end
@@ -81,8 +79,8 @@ function meaningful_line_count(file_path)
   return count
 end
 
--- Metatable.
-Quaternion = {}
+-- Metatable for quaternions.
+Quaternion = {} -- Forward declaration needed for metatable.
 quaternion_mt = {
   __index = {
 
@@ -181,7 +179,7 @@ quaternion_mt = {
       return "0"
     end
 
-    -- Build final string.
+    -- Build and return final string.
     for _, word in ipairs(str) do
       ret = ret .. word
     end
@@ -190,7 +188,7 @@ quaternion_mt = {
   end
 }
 
--- Quaternion constructor. Links the "class" metatable.
+-- Quaternion constructor. Links the instance to the metatable.
 Quaternion.new = function (x, y, z, w)
     return setmetatable({a = x, b = y, c = z, d = w}, quaternion_mt)
 end

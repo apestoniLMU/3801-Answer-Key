@@ -26,12 +26,11 @@ export function firstThenLowerCase(sentence, predicate) {
 }
 
 /**
- * Returns a generator producing the powers of the base specified by baseAndMax, up to but not exceeding the specified
- * maximum value.
+ * Returns a generator producing the powers of the given base, up to but not exceeding the given limit.
  *
  * @param {number} ofBase         Base from which to generate sequential powers.
  * @param {number} upTo           Maximum value to which powers will be generated.
- * @returns {Generator<number>}   Generator producing sequential powers of baseAndMax.ofBase.
+ * @returns {Generator<number>}   Generator producing sequential powers of ofBase.
  */
 export function* powersGenerator({ofBase, upTo}) {
   let index = 0
@@ -41,44 +40,44 @@ export function* powersGenerator({ofBase, upTo}) {
 }
 
 /**
- * Chainable function returning each parameter passed in the chain, separated by a space.
+ * Chainable function returning a concatenated string of each string passed into sequential function calls, separated
+ * by a space.
  *
  * @param {string} word         String to add to the returned sequence.
- * @returns {string|function}   If a word was passed, returns a chainable function that can be called again to add to
- *                              the sequence of words. When called without a parameter, returns each word given to each
- *                              chained function call, separated by spaces.
+ * @returns {string|function}   If a string was given, returns a function that can be called again to add to the
+ *                              sequence of strings. When called without a parameter, returns each word given to each
+ *                              sequential function call, separated by spaces.
  */
 export function say(word) {
-  // Stores the words we've collected in our chain.
+  // Stores the words we've collected in the current sequence of calls.
   let words= [];
 
-  // Helper that is returned whenever we call this function with a word, so the function can be called again.
+  /* Recursive function: when given nothing, returns the words passed to the say function chain. Otherwise, makes a
+   * recursive call appending the given string. */
   function chain(chainedWord) {
-    // When no more words are being passed, return the words we've collected in this chain of calls.
     if (chainedWord === undefined) {
       if (words.length > 0) {
         return words.join(' ');
       }
       return ""
-    // When a word is passed, append it to our collection and return this function to be called again, if desired.
     } else {
       words.push(chainedWord);
       return chain;
     }
   }
 
-  // When given a word, start a chain by returning the chain function with our initial word.
+  // Start a chain by returning the chain function with the initial word.
   if (word !== undefined) {
     words.push(word);
     return chain
-  // Special case for no parameter.
+  // Special case for when no string is given.
   } else {
     return ""
   }
 }
 
-/** Returns the number of lines in the specified file that are NOT (1) empty, (2) entirely whitespace, or (3) comprised
- * of '#'. */
+/** Returns the number of lines in the specified file that are NOT (1) empty, (2) entirely whitespace, or (3) whose
+ * first character is '#'. */
 export async function meaningfulLineCount(filePath) {
   let count = 0;
   const file = await open(filePath,'r')
@@ -88,13 +87,14 @@ export async function meaningfulLineCount(filePath) {
       count++
     }
   }
+
   return count;
 }
 
 /**
  * Structure representing a quaternion: a four-value representation of three-dimensional rotation.
  *
- * Contains various utilities for manipulating quaternions.
+ * Defines utilities for manipulating and operating on quaternions.
  */
 export class Quaternion {
 
@@ -114,7 +114,7 @@ export class Quaternion {
     let str = [];
     let ret = ""
 
-    // Initialize return string to the first coefficient if it is nonzero.
+    // Special formatting for the first coefficient.
     if (this.a !== 0) {
       str.push(String(this.a));
     }
@@ -148,12 +148,12 @@ export class Quaternion {
       }
     }
 
-    // We have to format each coefficient, besides the first one, since they need symbols with their values.
+    // Format the second, third, and fourth coefficients.
     formatString(this.b,"i")
     formatString(this.c,"j")
     formatString(this.d,"k")
 
-    // All zero coefficients can be represented by "0."
+    // Special case for a zero quaternion.
     if (str.length === 0) {
       return "0"
     }
