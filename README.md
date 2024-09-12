@@ -6,14 +6,26 @@
 * Sam Reitich (@[sreitich](https://github.com/sreitich))
 * Eren Unsal (@[Cyrendex](https://github.com/Cyrendex))
 
-**Homework 1:**
 
-This homework details the creation of 5 assigned problems:  
-* firstThenLowerCase, a function that takes in a sequence of strings and a predicate, and returns the first string within that sequence that follows the predicate. 
-* powersGenerator, a function that takes in two parameters: ofBase and upTo, and creates a generator that yields all values of a desired base up to a certain value.
-* say, a function with a string parameter that chains within itself, calling itself until one of the parameters is an empty string, returning all previous strings joined and split by a space.
-* meaningfulLineCount, a function that takes in a string that, if a file with the same name is found, prints the number of lines within that file that are neither (1) empty, nor (2) made up entirely of whitespace, nor (3) whose first non-whitespace character is #.
-* Quaternion, a class that represents the directional rotation of an object. Quaternions can be added, multiplied, described as a string, can be compared to other quaternions, and can give a list representation of the coefficients.
+
+## Assignments
+
+
+
+### **Homework 1:**
+
+This assignment implements 5 exercises: 
+* **First, then Lower-Case:** Function taking a sequence of strings and a predicate; returns the first string in the sequence that satisfies the predicate. Returns null if no strings satisfy the predicate.
+* **Powers Generator:** Function that takes a base and an upper limit; creates a generator that yields the sequential powers of the given base, up to the given limit.
+* **Say:** "Chainable" function with an optional string parameter. When given a string, returns a recursive function that can take a new string parameter. When no more strings (or an empty string) are given, returns a new string concatenating each string that was passed in the chained sequence of calls, joined by a space character.
+* **Meaningful Line Count:** Function that takes a file path. Returns the number of lines in that file that are *not* (1) empty, (2) made entirely of whitespace, or (3) whose first non-whitespace character is '#'.
+* **Quaternion:** Class representing the eponymous mathematical structure, which defines the rotation of an object in three-dimensional space. Implements overloaded operators for adding, multiplying, equality-checking, and "stringifying." Defines additional helpers for retrieving the quaternion's coefficients and computing its conjugate.
+
+
+
+------
+
+
 
 ## Testing Instructions
 ### Lua
