@@ -20,8 +20,7 @@ func change(_ amount: Int) -> Result<[Int:Int], NegativeAmountError> {
  */
 func firstThenLowerCase(of strings: [String], satisfying predicate: (String) -> Bool) -> String?
 {
-    let firstString = strings.first { predicate($0) }
-    return firstString?.lowercased()
+    return strings.first { predicate($0) }?.lowercased()
 }
 
 // Write your say function here
