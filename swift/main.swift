@@ -41,11 +41,11 @@ expectSuccess(change(10000000000005), [25: 400000000000, 10: 0, 5: 1, 1: 0])
 
 // Uncomment the following tests as you complete the exercises
 
-// suite("first_then_lower_case")
-// expect(firstThenLowerCase(of: [], satisfying: { $0 != "" }) == nil)
-// expect(firstThenLowerCase(of: ["", "A", "B"], satisfying: { $0 != "" }) == "a")
-// expect(firstThenLowerCase(of: ["", "A", "ABC"], satisfying: { $0.count > 3 }) == nil)
-// expect(firstThenLowerCase(of: ["ABC", "ABCD", "ABCDE"], satisfying: { $0.count > 3 }) == "abcd")
+ suite("first_then_lower_case")
+ expect(firstThenLowerCase(of: [], satisfying: { $0 != "" }) == nil)
+ expect(firstThenLowerCase(of: ["", "A", "B"], satisfying: { $0 != "" }) == "a")
+ expect(firstThenLowerCase(of: ["", "A", "ABC"], satisfying: { $0.count > 3 }) == nil)
+ expect(firstThenLowerCase(of: ["ABC", "ABCD", "ABCDE"], satisfying: { $0.count > 3 }) == "abcd")
 
 // suite("say")
 // expect(say().phrase == "")

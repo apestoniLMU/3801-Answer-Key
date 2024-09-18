@@ -18,20 +18,14 @@ func change(_ amount: Int) -> Result<[Int:Int], NegativeAmountError> {
 /**
  Returns the first string in the given array that satisfies the given predicate, converted to lower-case.
  */
-func firstThenLowerCase(of strings: [String?], satisfying predicate: (String) -> Bool) -> String?
+func firstThenLowerCase(of strings: [String], satisfying predicate: (String) -> Bool) -> String?
 {
-    for string in strings
-    {
-        if (string != nil ? predicate(string!) : false)
-        {
-            return string?.lowercased()
-        }
-    }
-
-    return nil
+    let firstString = strings.first { predicate($0) }
+    return firstString?.lowercased()
 }
 
 // Write your say function here
+func say()
 
 // Write your meaningfulLineCount function here
 
