@@ -47,21 +47,21 @@ expectSuccess(change(10000000000005), [25: 400000000000, 10: 0, 5: 1, 1: 0])
  expect(firstThenLowerCase(of: ["", "A", "ABC"], satisfying: { $0.count > 3 }) == nil)
  expect(firstThenLowerCase(of: ["ABC", "ABCD", "ABCDE"], satisfying: { $0.count > 3 }) == "abcd")
 
-// suite("say")
-// expect(say().phrase == "")
-// expect(say("hi").phrase == "hi")
-// expect(say("Oh").and("kay").phrase == "Oh kay")
-// expect(say("hello").and("my").and("name").and("is").and("Colette").phrase ==
-//     "hello my name is Colette")
-// expect(say("h i").phrase == "h i")
-// expect(say("hi ").and("   there").phrase == "hi     there")
-// expect(say("").and("").and("dog").and("").and("go").phrase == "  dog  go")
-// expect(say("🐤🦇").and("$🦊👏🏽").and("!").phrase == "🐤🦇 $🦊👏🏽 !")
-// expect(say("😄🤗").and("💀👊🏾").phrase == "😄🤗 💀👊🏾")
-// // Ensure there is no sharing of partial states!
-// var greet = say("Hello").and("there")
-// expect(greet.and("nice").and("person").phrase == "Hello there nice person")
-// expect(greet.and("Swift").phrase == "Hello there Swift")
+ suite("say")
+ expect(say().phrase == "")
+ expect(say("hi").phrase == "hi")
+ expect(say("Oh").and("kay").phrase == "Oh kay")
+ expect(say("hello").and("my").and("name").and("is").and("Colette").phrase ==
+     "hello my name is Colette")
+ expect(say("h i").phrase == "h i")
+ expect(say("hi ").and("   there").phrase == "hi     there")
+ expect(say("").and("").and("dog").and("").and("go").phrase == "  dog  go")
+ expect(say("🐤🦇").and("$🦊👏🏽").and("!").phrase == "🐤🦇 $🦊👏🏽 !")
+ expect(say("😄🤗").and("💀👊🏾").phrase == "😄🤗 💀👊🏾")
+ // Ensure there is no sharing of partial states!
+ var greet = say("Hello").and("there")
+ expect(greet.and("nice").and("person").phrase == "Hello there nice person")
+ expect(greet.and("Swift").phrase == "Hello there Swift")
 
 // suite("meaningfulLineCount");
 // await expectFailure(meaningfulLineCount("NoSuchFile.txt"))

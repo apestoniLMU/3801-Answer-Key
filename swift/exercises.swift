@@ -23,8 +23,34 @@ func firstThenLowerCase(of strings: [String], satisfying predicate: (String) -> 
     return strings.first { predicate($0) }?.lowercased()
 }
 
-// Write your say function here
-func say()
+/**
+ A structure that contains a "phrase" string. The "and" function can be used to generate a new instance
+ that concatenates another string to its phrase.
+ */
+struct say
+{
+    /** This instance's read-only phrase. */
+    private(set) var phrase: String
+
+    /** Default constructor that initializes phrase to empty. */
+    public init()
+    {
+        self.phrase = ""
+    }
+
+    /** Constructor initializing phrase. */
+    public init(_ phrase: String)
+    {
+        self.phrase = phrase
+    }
+
+    /** Returns a new say object with the given string appended to this instance's phrase, separated
+     by a space. */
+    public func and(_ nextWord: String) -> say
+    {
+        return say(self.phrase + " " + nextWord)
+    }
+}
 
 // Write your meaningfulLineCount function here
 
