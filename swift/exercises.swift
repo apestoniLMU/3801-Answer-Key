@@ -9,7 +9,7 @@ func change(_ amount: Int) -> Result<[Int:Int], NegativeAmountError> {
     }
     var (counts, remaining) = ([Int:Int](), amount)
     for denomination in [25, 10, 5, 1] {
-        (counts[denomination], remaining) = 
+        (counts[denomination], remaining) =
             remaining.quotientAndRemainder(dividingBy: denomination)
     }
     return .success(counts)
@@ -18,36 +18,26 @@ func change(_ amount: Int) -> Result<[Int:Int], NegativeAmountError> {
 /**
  Returns the first string in the given array that satisfies the given predicate, converted to lower-case.
  */
-func firstThenLowerCase(of strings: [String], satisfying predicate: (String) -> Bool) -> String?
-{
-    return strings.first { predicate($0) }?.lowercased()
+func firstThenLowerCase(of strings: [String], satisfying predicate: (String) -> Bool) -> String? {
+    return strings.first(where: { predicate($0) })?.lowercased()
 }
 
 /**
  A structure that contains a "phrase" string. The "and" function can be used to generate a new instance
- that concatenates another string to its phrase.
+ that concatenates another string to the phrase.
  */
-struct say
-{
-    /** This instance's read-only phrase. */
-    private(set) var phrase: String
+struct say {
+    /** This instance's phrase. */
+    let phrase: String
 
-    /** Default constructor that initializes phrase to empty. */
-    public init()
-    {
-        self.phrase = ""
+    /** Constructor to optionally initialize phrase. */
+    init(_ phrase: String = "") {
+        self.phrase = phrase;
     }
 
-    /** Constructor initializing phrase. */
-    public init(_ phrase: String)
-    {
-        self.phrase = phrase
-    }
-
-    /** Returns a new say object with the given string appended to this instance's phrase, separated
+    /** Returns a new say object with the given string appended to this instance's phrase, joined
      by a space. */
-    public func and(_ nextWord: String) -> say
-    {
+    func and(_ nextWord: String) -> say {
         return say(self.phrase + " " + nextWord)
     }
 }
