@@ -16,7 +16,7 @@ def change(amount: int) -> dict[int, int]:
 
 def first_then_lower_case(str_list: list[str], predicate: Callable, /) -> Optional[str]:
     """
-    Returns a lowercased version of the first string in the given list that satisfies the given predicate.
+    Returns a lower-cased version of the first string in the given list that satisfies the given predicate.
     """
     for string in str_list:
         if predicate(string):
@@ -26,7 +26,7 @@ def first_then_lower_case(str_list: list[str], predicate: Callable, /) -> Option
 
 def powers_generator(*, base: int, limit: int) -> Generator[int, None, type[StopIteration]]:
     """
-    Returns a generator producing the powers of the given base, up to but not exceeding the given maximum.
+    Returns a generator producing the powers of the given base, up to but not exceeding the given limit.
     """
     power: int = 0
     while True:
@@ -41,27 +41,25 @@ def powers_generator(*, base: int, limit: int) -> Generator[int, None, type[Stop
 def say(word: Optional[str] = None, /) -> str | Callable:
     """
     Returns a chainable function that can be called again. When called without parameters, returns all parameters passed
-    into the chain concatenated into a string, separated by spaces.
+    into sequential function calls, concatenated into a string, separated by spaces.
     """
     # Special case for no parameter on the first call.
     if word is None:
         return ""
 
-    # Recursive chaining function. Returns itself (via say function) with the current list of concatenated words.
+    # Recursive function. Returns itself (via say function) with the given string appended to the previous string.
+    # Returns the string of concatenated words when called without a parameter.
     def chain(next_word: Optional[str] = None, /):
-        # When no more words are being passed into the chain, return the concatenated string of words.
         if next_word is None:
             return word
-        # If this is called with another word, concatenate it and return a new chain function.
         return say(word + " " + next_word)
 
     return chain
 
-
 def meaningful_line_count(file_name: str, /) -> int:
     """
-    Returns the number of lines in the specified file that are NOT (1) empty, (2) entirely whitespace, or (3) comprised
-    of '#'.
+    Returns the number of lines in the specified file that are NOT (1) empty, (2) entirely whitespace, or (3) whose
+    first non-whitespace character is '#'.
     """
     line_count: int = 0
 
@@ -130,16 +128,22 @@ class Quaternion:
         Returns a mathematical representation of the quaternion, ignoring any zero-coefficients.
         """
         final_str = ""
-        final_str += "" if self.a == 0 else str(self.a)
-        final_str += "" if self.b == 0 else (("+" if (self.b > 0.0 and final_str != "") else "") + (str(self.b) if abs(self.b) - 1.0 != 0.0 else ("-" if self.b == -1.0 else ""))) + "i"
-        final_str += "" if self.c == 0 else (("+" if (self.c > 0.0 and final_str != "") else "") + (str(self.c) if abs(self.c) - 1.0 != 0.0 else ("-" if self.c == -1.0 else ""))) + "j" 
-        final_str += "" if self.d == 0 else (("+" if (self.d > 0.0 and final_str != "") else "") + (str(self.d) if abs(self.d) - 1.0 != 0.0 else ("-" if self.d == -1.0 else ""))) + "k"
+        final_str += "" if self.a == 0 else str(self.a)                                                 # a
+
+        final_str += "" if self.b == 0 else (("+" if (self.b > 0.0 and final_str != "") else "") +      # i
+            (str(self.b) if abs(self.b) - 1.0 != 0.0 else ("-" if self.b == -1.0 else ""))) + "i"
+
+        final_str += "" if self.c == 0 else (("+" if (self.c > 0.0 and final_str != "") else "") +      # j
+            (str(self.c) if abs(self.c) - 1.0 != 0.0 else ("-" if self.c == -1.0 else ""))) + "j"
+
+        final_str += "" if self.d == 0 else (("+" if (self.d > 0.0 and final_str != "") else "") +      # k
+            (str(self.d) if abs(self.d) - 1.0 != 0.0 else ("-" if self.d == -1.0 else ""))) + "k"
         return final_str if final_str != "" else "0"
 
     @property
     def conjugate(self: "Quaternion") -> "Quaternion":
         """
-        Returns the conjugation of this quaternion.
+        Returns the conjugate of this quaternion.
         """
         return Quaternion(
             self.a,
