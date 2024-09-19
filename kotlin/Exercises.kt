@@ -16,6 +16,18 @@ fun change(amount: Long): Map<Int, Long> {
 
 // Write your first then lower case function here
 
+/**
+ *  A function when given a list of strings and a predicate, returns the lowercased
+ *  version of the first string satisfying the given predicate. Otherwise, returns null.
+ *
+ * @param strList A list of strings.
+ * @param predicate A predicate where given a string, returns a boolean value.
+ * @return First string in strList that satisfies the predicate in lowercase, null otherwise.
+ */
+fun firstThenLowerCase(strList: List<String>, predicate: (String) -> Boolean): String? {
+    return strList.firstOrNull(predicate)?.lowercase()
+}
+
 // Write your say function here
 
 // Write your meaningfulLineCount function here

@@ -38,11 +38,11 @@ fun main() {
 
     // Uncomment the following tests as you complete the exercises
 
-    // suite("firstThenLowerCase");
-    // expect(firstThenLowerCase(listOf(), { !it.isEmpty() }) == null)
-    // expect(firstThenLowerCase(listOf("", "A", "B"), { !it.isEmpty() }) == "a")
-    // expect(firstThenLowerCase(listOf("", "A", "ABC"), { it.length > 3 }) == null)
-    // expect(firstThenLowerCase(listOf("ABC", "ABCD", "ABCDE"), { it.length > 3 }) == "abcd")
+    suite("firstThenLowerCase");
+    expect(firstThenLowerCase(listOf(), { !it.isEmpty() }) == null)
+    expect(firstThenLowerCase(listOf("", "A", "B"), { !it.isEmpty() }) == "a")
+    expect(firstThenLowerCase(listOf("", "A", "ABC"), { it.length > 3 }) == null)
+    expect(firstThenLowerCase(listOf("ABC", "ABCD", "ABCDE"), { it.length > 3 }) == "abcd")
 
     // suite("say")
     // expect(say().phrase == "")
