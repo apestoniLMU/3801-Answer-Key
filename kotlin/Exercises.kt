@@ -91,6 +91,65 @@ fun meaningfulLineCount(fileName: String): Long {
     }
     return meaningfulCount
 }
-// Write your Quaternion data class here
 
+// Write your Quaternion data class here
+data class Quaternion(
+    val a: Double,
+    val b: Double,
+    val c: Double,
+    val d: Double) {
+    companion object {
+            val ZERO = Quaternion(0.0, 0.0, 0.0, 0.0)
+            val I = Quaternion(0.0, 1.0, 0.0, 0.0)
+            val J = Quaternion(0.0, 0.0, 1.0, 0.0)
+            val K = Quaternion(0.0, 0.0, 0.0, 1.0)
+    }
+
+    operator fun plus(other: Quaternion): Quaternion {
+            return Quaternion(this.a + other.a, this.b + other.b, this.c + other.c, this.d + other.d)
+    }
+
+    operator fun times(other: Quaternion): Quaternion {
+        return Quaternion(
+            this.a * other.a - this.b * other.b - this.c * other.c - this.d * other.d,  // 1
+            this.a * other.b + this.b * other.a + this.c * other.d - this.d * other.c,  // i
+            this.a * other.c - this.b * other.d + this.c * other.a + this.d * other.b,  // j
+            this.a * other.d + this.b * other.c - this.c * other.b + this.d * other.a  // k
+        )
+    }
+
+    fun coefficients(): List<Double> {
+        return listOf(this.a, this.b, this.c, this.d)
+    }
+
+    fun conjugate(): Quaternion {
+        return Quaternion(this.a, -this.b, -this.c, -this.d)
+    }
+
+    override fun toString(): String {
+        if (this == ZERO) return "0" // Special case
+
+        val builder = StringBuilder()
+
+        fun symbolFormat(value: Double, symbol: String) {
+            when (value) {
+                0.0 -> {} // Don't do anything when value is 0
+                1.0 -> {if (builder.isNotEmpty()) builder.append("+$symbol") else builder.append(symbol) }
+                -1.0 -> builder.append("-$symbol")
+                else -> {
+                    if (value > 0.0 && builder.isNotEmpty())  builder.append("+")
+                    builder.append("$value$symbol")
+                }
+            }
+        }
+
+        if (this.a != 0.0) builder.append(this.a)
+
+        symbolFormat(this.b, "i")
+        symbolFormat(this.c, "j")
+        symbolFormat(this.d, "k")
+
+        return builder.toString()
+    }
+}
 // Write your Binary Search Tree interface and implementing classes here

@@ -63,39 +63,39 @@ fun main() {
     expectToThrow({ meaningfulLineCount("no-such-file.txt") }, IOException::class.java, "No such file")
     expect(meaningfulLineCount("test-for-line-count.txt") == 5L)
 
-    // suite("Quaternion")
-    // val q = Quaternion(3.5, 2.25, -100.0, -1.25)
-    // expect(q.a == 3.5)
-    // expect(q.b == 2.25)
-    // expect(q.c == -100.0)
-    // expect(q.d == -1.25)
+     suite("Quaternion")
+     val q = Quaternion(3.5, 2.25, -100.0, -1.25)
+     expect(q.a == 3.5)
+     expect(q.b == 2.25)
+     expect(q.c == -100.0)
+     expect(q.d == -1.25)
 
-    // val q1 = Quaternion(1.0, 3.0, 5.0, 2.0);
-    // val q2 = Quaternion(-2.0, 2.0, 8.0, -1.0);
-    // val q3 = Quaternion(-1.0, 5.0, 13.0, 1.0);
-    // val q4 = Quaternion(-46.0, -25.0, 5.0, 9.0);
+     val q1 = Quaternion(1.0, 3.0, 5.0, 2.0);
+     val q2 = Quaternion(-2.0, 2.0, 8.0, -1.0);
+     val q3 = Quaternion(-1.0, 5.0, 13.0, 1.0);
+     val q4 = Quaternion(-46.0, -25.0, 5.0, 9.0);
 
-    // expect(Quaternion.ZERO.coefficients() == listOf(0.0, 0.0, 0.0, 0.0))
-    // expect(Quaternion.K.coefficients() == listOf(0.0, 0.0, 0.0, 1.0))
-    // expect(q2.coefficients() == listOf(-2.0, 2.0, 8.0, -1.0))
+     expect(Quaternion.ZERO.coefficients() == listOf(0.0, 0.0, 0.0, 0.0))
+     expect(Quaternion.K.coefficients() == listOf(0.0, 0.0, 0.0, 1.0))
+     expect(q2.coefficients() == listOf(-2.0, 2.0, 8.0, -1.0))
 
-    // expect(q1 + q2 == q3)
-    // expect(q1 * q2 == q4)
-    // expect(q1 + Quaternion.ZERO == q1)
-    // expect(q1 * Quaternion.ZERO == Quaternion.ZERO)
-    // expect(Quaternion.I * Quaternion.J == Quaternion.K)
-    // expect(Quaternion.J * Quaternion.K == Quaternion.I)
-    // expect(Quaternion.J + Quaternion.I == Quaternion(0.0, 1.0, 1.0, 0.0))
+     expect(q1 + q2 == q3)
+     expect(q1 * q2 == q4)
+     expect(q1 + Quaternion.ZERO == q1)
+     expect(q1 * Quaternion.ZERO == Quaternion.ZERO)
+     expect(Quaternion.I * Quaternion.J == Quaternion.K)
+     expect(Quaternion.J * Quaternion.K == Quaternion.I)
+     expect(Quaternion.J + Quaternion.I == Quaternion(0.0, 1.0, 1.0, 0.0))
 
-    // expect("${Quaternion.ZERO}" == "0")
-    // expect("${Quaternion.J}" == "j")
-    // expect("${Quaternion.K.conjugate()}" == "-k")
-    // expect("${Quaternion.J.conjugate() * Quaternion(2.0, 0.0, 0.0, 0.0)}" == "-2.0j")
-    // expect("${Quaternion.J + Quaternion.K}" == "j+k")
-    // expect("${Quaternion(0.0, -1.0, 0.0, 2.25)}" == "-i+2.25k")
-    // expect("${Quaternion(-20.0, -1.75, 13.0, -2.25)}" == "-20.0-1.75i+13.0j-2.25k")
-    // expect("${Quaternion(-1.0, -2.0, 0.0, 0.0)}" == "-1.0-2.0i")
-    // expect("${Quaternion(1.0, 0.0, -2.0, 5.0)}" == "1.0-2.0j+5.0k")
+     expect("${Quaternion.ZERO}" == "0")
+     expect("${Quaternion.J}" == "j")
+     expect("${Quaternion.K.conjugate()}" == "-k")
+     expect("${Quaternion.J.conjugate() * Quaternion(2.0, 0.0, 0.0, 0.0)}" == "-2.0j")
+     expect("${Quaternion.J + Quaternion.K}" == "j+k")
+     expect("${Quaternion(0.0, -1.0, 0.0, 2.25)}" == "-i+2.25k")
+     expect("${Quaternion(-20.0, -1.75, 13.0, -2.25)}" == "-20.0-1.75i+13.0j-2.25k")
+     expect("${Quaternion(-1.0, -2.0, 0.0, 0.0)}" == "-1.0-2.0i")
+     expect("${Quaternion(1.0, 0.0, -2.0, 5.0)}" == "1.0-2.0j+5.0k")
 
     // suite("BinarySearchTree")
     // var t: BinarySearchTree = BinarySearchTree.Empty
