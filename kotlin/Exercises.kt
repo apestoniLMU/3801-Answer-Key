@@ -1,4 +1,5 @@
 import java.io.BufferedReader
+import java.io.File
 import java.io.FileReader
 import java.io.IOException
 
@@ -57,6 +58,39 @@ class say(private val sentence: String? = null) {
 }
 // Write your meaningfulLineCount function here
 
+/**
+ *  A function when given a file name, returns the number of lines that fulfill a certain set of rules.
+ *  If the file is not found, throws an IO exception.
+ *
+ *  Rules:
+ *  1) Line is not empty
+ *  2) Line is not entirely made of whitespaces
+ *  3) The first non-whitespaces character of the line is not '#'
+ *
+ * @param fileName Name of the file.
+ *
+ * @return The amount of 'meaningful' lines.
+ */
+fun meaningfulLineCount(fileName: String): Long {
+    var meaningfulCount: Long = 0L
+    val fileReader: BufferedReader?
+    try {
+        fileReader = File(fileName).bufferedReader()
+        print(fileReader.readLine())
+    } catch (e: IOException) {
+        throw IOException("No such file")
+    }
+
+    fileReader.useLines {
+        lines -> lines.forEach  {
+            val trimmedLine: String = it.trim()
+            if (trimmedLine.isNotEmpty() && trimmedLine.substring(0, 1) != "#") {
+                meaningfulCount++
+            }
+        }
+    }
+    return meaningfulCount
+}
 // Write your Quaternion data class here
 
 // Write your Binary Search Tree interface and implementing classes here
