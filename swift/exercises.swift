@@ -44,6 +44,9 @@ struct say {
 
 // Write your meaningfulLineCount function here
 
+/**
+ A structure that represents a quaternion: a four-dimensional representation of three-dimensional rotation.
+ */
 struct Quaternion : CustomStringConvertible {
     let a: Double
     let b: Double
