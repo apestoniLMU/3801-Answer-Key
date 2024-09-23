@@ -59,9 +59,9 @@ fun main() {
     expect(greet.and("nice").and("person").phrase == "Hello there nice person")
     expect(greet.and("Swift").phrase == "Hello there Swift")
 
-    // suite("meaningfulLineCount")
-    // expectToThrow({ meaningfulLineCount("no-such-file.txt") }, IOException::class.java, "No such file")
-    // expect(meaningfulLineCount("../test-for-line-count.txt") == 5L)
+    suite("meaningfulLineCount")
+    expectToThrow({ meaningfulLineCount("no-such-file.txt") }, IOException::class.java, "No such file")
+    expect(meaningfulLineCount("test-for-line-count.txt") == 5L)
 
     // suite("Quaternion")
     // val q = Quaternion(3.5, 2.25, -100.0, -1.25)
