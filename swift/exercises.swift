@@ -84,8 +84,7 @@ struct Quaternion : CustomStringConvertible {
     /** String representation of this quaternion. */
     var description: String {
         // Special case for zero quaternion.
-        if (self == Quaternion.ZERO)
-        {
+        if self == Quaternion.ZERO {
             return "0"
         }
 
@@ -106,7 +105,7 @@ struct Quaternion : CustomStringConvertible {
         }
 
         // Custom formatting for first coefficient.
-        if (self.a != 0.0) {
+        if self.a != 0.0 {
             retString += "\(self.a)"
         }
 
@@ -149,3 +148,5 @@ func == (left: Quaternion, right: Quaternion) -> Bool {
 }
 
 // Write your Binary Search Tree enum here
+indirect enum BinarySearchTree<T> {
+}
