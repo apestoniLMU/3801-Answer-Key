@@ -61,7 +61,7 @@ fun main() {
 
     suite("meaningfulLineCount")
     expectToThrow({ meaningfulLineCount("no-such-file.txt") }, IOException::class.java, "No such file")
-    expect(meaningfulLineCount("test-for-line-count.txt") == 5L)
+    expect(meaningfulLineCount("../test-for-line-count.txt") == 5L)
 
      suite("Quaternion")
      val q = Quaternion(3.5, 2.25, -100.0, -1.25)
