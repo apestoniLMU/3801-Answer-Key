@@ -97,35 +97,35 @@ fun main() {
      expect("${Quaternion(-1.0, -2.0, 0.0, 0.0)}" == "-1.0-2.0i")
      expect("${Quaternion(1.0, 0.0, -2.0, 5.0)}" == "1.0-2.0j+5.0k")
 
-    // suite("BinarySearchTree")
-    // var t: BinarySearchTree = BinarySearchTree.Empty
-    // expect(t.size() == 0)
-    // expect(!t.contains("A"))
-    // expect(t.toString() == "()")
-    // t = t.insert("G")
-    // expect(t.size() == 1)
-    // expect(t.contains("G"))
-    // expect(!t.contains("A"))
-    // expect(t.toString() == "(G)")
-    // t = t.insert("B")
-    // expect(t.toString() == "((B)G)")
-    // t = t.insert("D")
-    // expect(t.toString() == "((B(D))G)")
-    // t = t.insert("H")
-    // expect(t.toString() == "((B(D))G(H))")
-    // t = t.insert("A")
-    // expect(t.toString() == "(((A)B(D))G(H))")
-    // t = t.insert("C")
-    // t = t.insert("J")
-    // expect(t.size() == 7)
-    // expect(t.contains("J"))
-    // expect(!t.contains("Z"))
-    // expect(t.toString() == "(((A)B((C)D))G(H(J)))")
-    // // Test immutability
-    // var t2: BinarySearchTree = t;
-    // t2 = t2.insert("F");
-    // expect(t2.size() == 8);
-    // expect(t.size() == 7);
+     suite("BinarySearchTree")
+     var t: BinarySearchTree = BinarySearchTree.Empty
+     expect(t.size() == 0)
+     expect(!t.contains("A"))
+     expect(t.toString() == "()")
+     t = t.insert("G")
+     expect(t.size() == 1)
+     expect(t.contains("G"))
+     expect(!t.contains("A"))
+     expect(t.toString() == "(G)")
+     t = t.insert("B")
+     expect(t.toString() == "((B)G)")
+     t = t.insert("D")
+     expect(t.toString() == "((B(D))G)")
+     t = t.insert("H")
+     expect(t.toString() == "((B(D))G(H))")
+     t = t.insert("A")
+     expect(t.toString() == "(((A)B(D))G(H))")
+     t = t.insert("C")
+     t = t.insert("J")
+     expect(t.size() == 7)
+     expect(t.contains("J"))
+     expect(!t.contains("Z"))
+     expect(t.toString() == "(((A)B((C)D))G(H(J)))")
+     // Test immutability
+     var t2: BinarySearchTree = t;
+     t2 = t2.insert("F");
+     expect(t2.size() == 8);
+     expect(t.size() == 7);
 
     println("\n$passed passed, $failed failed")
 }

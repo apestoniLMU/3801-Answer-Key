@@ -93,11 +93,17 @@ fun meaningfulLineCount(fileName: String): Long {
 }
 
 // Write your Quaternion data class here
+/**
+ *  Represents a quaternion: a four-value representation of three-dimensional rotation given four Double values.
+ */
 data class Quaternion(
     val a: Double,
     val b: Double,
     val c: Double,
     val d: Double) {
+    /**
+     *  Static members of the Quaternion dataclass that represent very common quaternions.
+     */
     companion object {
             val ZERO = Quaternion(0.0, 0.0, 0.0, 0.0)
             val I = Quaternion(0.0, 1.0, 0.0, 0.0)
@@ -105,10 +111,21 @@ data class Quaternion(
             val K = Quaternion(0.0, 0.0, 0.0, 1.0)
     }
 
+    /**
+     *  Adds two Quaternions.
+     *
+     *  @return the resulting Quaternion.
+     */
     operator fun plus(other: Quaternion): Quaternion {
             return Quaternion(this.a + other.a, this.b + other.b, this.c + other.c, this.d + other.d)
     }
 
+    /**
+     *  Multiplies two quaternions.
+     *  Formula courtesy of https://stackoverflow.com/questions/19956555/how-to-multiply-two-quaternions
+     *
+     *  @return the resulting Quaternion
+     */
     operator fun times(other: Quaternion): Quaternion {
         return Quaternion(
             this.a * other.a - this.b * other.b - this.c * other.c - this.d * other.d,  // 1
@@ -118,14 +135,23 @@ data class Quaternion(
         )
     }
 
+    /**
+     *  Returns a list of the Quaternion coefficients in the given order.
+     */
     fun coefficients(): List<Double> {
         return listOf(this.a, this.b, this.c, this.d)
     }
 
+    /**
+     *  Negates i,j,k values of the Quaternion and returns a new one.
+     */
     fun conjugate(): Quaternion {
         return Quaternion(this.a, -this.b, -this.c, -this.d)
     }
 
+    /**
+     *  Returns a mathematical representation of the quaternion, ignoring any zero-coefficients.
+     */
     override fun toString(): String {
         if (this == ZERO) return "0" // Special case
 
@@ -152,4 +178,57 @@ data class Quaternion(
         return builder.toString()
     }
 }
+
 // Write your Binary Search Tree interface and implementing classes here
+/**
+ *  A sealed interface used to implement empty and node binary search trees nested inside.
+ *
+ *  @property size returns the size of the current tree.
+ *  @property contains traverses through the tree and returns if the lookup value exists.
+ *  @property insert adds a node to the right part of the tree.
+ *  @property toString represents the binary search tree in string format.
+ */
+sealed interface BinarySearchTree {
+    fun size(): Int
+    fun contains(value: String) : Boolean
+    fun insert(value: String): BinarySearchTree
+    override fun toString(): String
+
+    object Empty : BinarySearchTree {
+        override fun size(): Int = 0
+        override fun contains(value: String): Boolean = false
+        override fun insert(value: String): BinarySearchTree = Node(value, this, this)
+        override fun toString(): String = "()" // Test cases expect and empty parentheses for an empty tree
+    }
+
+    data class Node(
+        val value: String,
+        val left: BinarySearchTree = Empty,
+        val right: BinarySearchTree = Empty
+    ) : BinarySearchTree {
+        override fun size(): Int = 1 + left.size() + right.size()
+
+        override fun contains(value: String): Boolean {
+            return when {
+                // Assuming comparable values
+                value == this.value -> true // Found value
+                value < this.value -> left.contains(value) // Continue searching to the left
+                else -> right.contains(value) // Continue searching to the right
+            }
+        }
+
+        override fun insert(value: String): BinarySearchTree {
+            return when {
+                value == this.value -> this // Duplicate entry
+                value < this.value -> copy(left = left.insert(value))
+                else -> copy(right = right.insert(value))
+            }
+        }
+
+        override fun toString(): String {
+            val leftString = if (left is Empty) "" else "$left"
+            val rightString = if (right is Empty) "" else "$right"
+            return "($leftString$value$rightString)"
+        }
+    }
+}
