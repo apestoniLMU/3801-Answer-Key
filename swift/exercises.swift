@@ -147,6 +147,65 @@ func == (left: Quaternion, right: Quaternion) -> Bool {
          left.d == right.d)
 }
 
-// Write your Binary Search Tree enum here
-indirect enum BinarySearchTree<T> {
+/** An enumeration representing a node in a binary search tree. */
+indirect enum BinarySearchTree : CustomStringConvertible {
+	// This is an empty child of a node.
+	case empty
+	// This is a node with a value and two (possibly empty) children.
+	case node(BinarySearchTree, String, BinarySearchTree)
+
+	/** Number of valid nodes in this tree. */
+	var size: Int {
+		switch self {
+			case .empty: return 0
+			case .node(let left, _, let right):
+				return left.size + 1 + right.size
+		}
+	}
+
+	/** String conversion. */
+	var description: String {
+		switch self {
+			case .empty:
+				return "()"
+			case let .node(left, value, right):
+				// Parentheses from any empty children have to be removed.
+				return "(\(left)\(value)\(right))".replacingOccurrences(of: "()", with: "")
+		}
+	}
+
+	/** Whether a node in this tree contains the given value. */
+	func contains(_ str: String) -> Bool  {
+		switch self {
+			case .empty: return false
+			case .node(let left, let value, let right):
+				if value == str {
+					return true
+				}
+				else if value > str {
+					return left.contains(str)
+				}
+				else {
+					return right.contains(str)
+				}
+		}
+	}
+
+	/** Inserts a new node into this tree. */
+	func insert(_ value: String) -> BinarySearchTree {
+		switch self {
+			// Base case: insert value into the first empty child.
+			case .empty:
+				return .node(.empty, value, .empty)
+			case let .node(left, v, right):
+				if value < v {
+					return .node(left.insert(value), v, right)
+				} else if value > v {
+					return .node(left, v, right.insert(value))
+				// Special case: value is already present.
+				} else {
+					return self
+				}
+		}
+	}
 }
