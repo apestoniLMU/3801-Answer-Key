@@ -47,11 +47,11 @@ Returns the number of lines in the given file that are NOT (1) empty, (2) all wh
 (3) whose first non-whitespace character is "#".
 */
 func meaningfulLineCount(_ filename: String) async -> Result<Int, NoSuchFileError> {
-
 	var count: Int = 0
 
+	let url: URL = URL(fileURLWithPath: filename)
 	do {
-		for try line in try String(contentsOfFile: filename).split { $0.isNewline } {
+		for try await line in url.lines {
 			// Ignore empty lines, all-whitespace lines, and lines starting with "#".
 			let trimmed: String = line.trimmingCharacters(in: .whitespacesAndNewlines)
 			if (trimmed.isEmpty || trimmed.hasPrefix("#")) {
@@ -66,21 +66,6 @@ func meaningfulLineCount(_ filename: String) async -> Result<Int, NoSuchFileErro
 	}
 
 	return .success(count)
-
-/* I think that this is the correct way to implement this function, but there's some kind of bug with the package 
-that prevents it from compiling on any of the emulators I'm trying to use. */
-
-/*
-	let url = URL(fileURLWithPath: filename)
-	do {
-		let bytes = try await URLSession.shared.bytes(from: url)
-	
-	} catch {
-		return .failure(NoSuchFileError())
-	}
-
-	return .success(5)
-*/
 }
 
 /**
