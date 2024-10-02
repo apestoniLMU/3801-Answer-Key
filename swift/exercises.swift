@@ -49,6 +49,7 @@ Returns the number of lines in the given file that are NOT (1) empty, (2) all wh
 func meaningfulLineCount(_ filename: String) async -> Result<Int, NoSuchFileError> {
 	var count: Int = 0
 
+	// NOTE: You might need to import FoundationNetworking depending on your version.
 	let url: URL = URL(fileURLWithPath: filename)
 	do {
 		for try await line in url.lines {
