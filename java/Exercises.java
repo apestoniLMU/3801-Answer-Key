@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Optional;
@@ -19,49 +18,73 @@ public class Exercises {
         return counts;
     }
 
-    // Write your first then lower case function here
-    static Optional firstThenLowerCase(List<String> sentence, Predicate<String> p) {
-        return sentence.stream().filter(p).map(String::toLowerCase).findFirst();
+    /**
+     * Returns the first string in the given list that satisfies the given predicate, converted to lower-case.
+     *
+     * @param strings       List of strings to search.
+     * @param predicate     Predicate to try to satisfy.
+     * @return              The first string satisfying the predicate.
+     */
+    static Optional<String> firstThenLowerCase(List<String> strings, Predicate<String> predicate) {
+        return strings.stream().filter(predicate).map(String::toLowerCase).findFirst();
     }
-    // Write your say function here
+
+    /**
+     * A class containing a "phrase" string, which can be continuously concatenated inline via an "and" function.
+     */
     static class Say {
-        private List<String> words;
+        final private String phrase;
 
-        Say(List<String> sList, String word) {
-            this.words = new ArrayList<String>(sList);
-            words.add(word);
+        /**
+         * Constructor initializing "phrase."
+         * @param phrase        This instance's phrase.
+         */
+        Say(String phrase) {
+            this.phrase = phrase;
         }
-        
+
+        /**
+         * Creates a new Say instance with a given string, appended to this instance's phrase, as its new phrase.
+         * @param newWord       The string to append to this Say object's phrase, to use as the new object's phrase.
+         * @return              A new Say object with the given string appended to this object's phrase as its phrase.
+         */
         Say and(String newWord) {
-            return new Say(this.words, " " + newWord);
+            return new Say(this.phrase + " " + newWord);
         }
-        
+
+        /**
+         * Accessor for phrase.
+         * @return              This Say object's phrase.
+         */
         String phrase() {
-            String ret = "";
-            if(this.words.size()==0) {
-                return "";
-            }
-
-            for(String each:this.words) {
-                if(ret.equals("")) {
-                    ret = each;
-                } else {
-                    ret += each;
-                }
-            }
-            return ret;
+            return phrase;
         }
     }
 
-    static Say say(String word) {
-        return new Say(new ArrayList<String>(), word);
+    /**
+     * Constructs a Say object with the given phrase.
+     * @param phrase    The new object's phrase.
+     * @return          A new Say object with the given phrase.
+     */
+    static Say say(String phrase) {
+        return new Say(phrase);
     }
 
+    /**
+     * Constructs an empty Say object.
+     * @return          A new Say object with an empty phrase.
+     */
     static Say say() {
-        return new Say(new ArrayList<String>(), "");
+        return new Say("");
     }
 
-    // Write your line count function here
+    /**
+     * Counts the number of lines in the given file that are not (1) empty, (2) all whitespace, or (3) whose first
+     * non-whitespace character is "#".
+     * @param path              The path of the file to read.
+     * @return                  The number of lines in the file satisfying the conditions.
+     * @throws IOException      Given file could not be found.
+     */
     static long meaningfulLineCount(String path) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             return reader.lines()
@@ -74,7 +97,9 @@ public class Exercises {
     }
 }
 
-// Write your Quaternion record class here
+/**
+ * Represents a mathematical quaternion: a four-dimensional representation of three-dimensional rotation.
+ */
 record Quaternion(double a, double b, double c, double d) {
     
     public static final Quaternion ZERO = new Quaternion(0, 0, 0, 0);
@@ -83,11 +108,16 @@ record Quaternion(double a, double b, double c, double d) {
     public static final Quaternion K = new Quaternion(0, 0, 0, 1);
 
     public Quaternion {
-        if(Double.isNaN(a) || Double.isNaN(b) || Double.isNaN(c) || Double.isNaN(d)) {
+        if (Double.isNaN(a) || Double.isNaN(b) || Double.isNaN(c) || Double.isNaN(d)) {
             throw new IllegalArgumentException("Coefficients cannot be NaN");
         }
     }
 
+    /**
+     * Multiplies this quaternion by another.
+     * @param other     The quaternion to multiply by.
+     * @return          The result of the multiplication.
+     */
     public Quaternion times(Quaternion other) {
         return new Quaternion(
             (this.a*other.a() - this.b*other.b() - this.c*other.c() - this.d*other.d()),
@@ -97,6 +127,11 @@ record Quaternion(double a, double b, double c, double d) {
         );
     }
 
+    /**
+     * Adds this quaternion to another.
+     * @param other     The quaternion to add.
+     * @return          The result of the addition.
+     */
     public Quaternion plus(Quaternion other) {
         return new Quaternion(
             a + other.a(),
@@ -106,11 +141,18 @@ record Quaternion(double a, double b, double c, double d) {
         );
     }
 
-
+    /**
+     * This quaternion's coefficients.
+     * @return      This quaternion's coefficients as a list.
+     */
     public List<Double> coefficients() {
         return List.copyOf(List.of(this.a, this.b, this.c, this.d));
     }
 
+    /**
+     * This quaternion's conjugate.
+     * @return      The conjugate quaternion of this quaternion.
+     */
     public Quaternion conjugate() {
         return new Quaternion(
             a, 
@@ -120,6 +162,10 @@ record Quaternion(double a, double b, double c, double d) {
         );
     }
 
+    /**
+     * Converts this quaternion's coefficients into a readable format.
+     * @return      This quaternion's coefficients in the form "a + bi + cj + dk."
+     */
     public String toString() {
         String ret = "";
         if (a==0 && b==0 && c==0 && d==0) {
@@ -131,13 +177,13 @@ record Quaternion(double a, double b, double c, double d) {
         }
 
         if (b != 0) {
-            if(ret.equals("")) {
+            if(ret.isEmpty()) {
                 if(b == 1) {
                     ret += "i";
                 } else if (b == -1) {
                     ret += "-i";
                 } else {
-                    ret += Double.toString(b) + "i";
+                    ret += b + "i";
                 }
             } else {
                 if (b > 0) {
@@ -145,7 +191,7 @@ record Quaternion(double a, double b, double c, double d) {
                 }
 
                 if(Math.abs(b) != 1) {
-                    ret += Double.toString(b) + "i";
+                    ret += b + "i";
                 } else {
                     ret += "i";
                 }
@@ -153,13 +199,13 @@ record Quaternion(double a, double b, double c, double d) {
         }
 
         if (c != 0) {
-            if(ret.equals("")) {
+            if(ret.isEmpty()) {
                 if(c == 1) {
                     ret += "j";
                 } else if (c == -1) {
                     ret += "-j";
                 } else {
-                    ret += Double.toString(c) + "j";
+                    ret += c + "j";
                 }
             } else {
                 if (c > 0) {
@@ -167,7 +213,7 @@ record Quaternion(double a, double b, double c, double d) {
                 }
 
                 if(Math.abs(c) != 1) {
-                    ret += Double.toString(c) + "j";
+                    ret += c + "j";
                 } else {
                     ret += "j";
                 }
@@ -175,13 +221,13 @@ record Quaternion(double a, double b, double c, double d) {
         }
 
         if (d != 0) {
-            if(ret.equals("")) {
+            if(ret.isEmpty()) {
                 if(d == 1) {
                     ret += "k";
                 } else if (d == -1) {
                     ret += "-k";
                 } else {
-                    ret += Double.toString(d) + "k";
+                    ret += d + "k";
                 }
             } else {
                 if (d > 0) {
@@ -189,7 +235,7 @@ record Quaternion(double a, double b, double c, double d) {
                 }
 
                 if(Math.abs(d) != 1) {
-                    ret += Double.toString(d) + "k";
+                    ret += d + "k";
                 } else {
                     ret += "k";
                 }
@@ -198,15 +244,41 @@ record Quaternion(double a, double b, double c, double d) {
         return ret;
     }
 }
-// Write your BinarySearchTree sealed interface and its implementations here
 
+/**
+ * A binary search tree that supports insertion, lookups, and element count.
+ */
 abstract sealed class BinarySearchTree permits Empty, Node {
+
+    /**
+     * The size of the tree from this node.
+     */
     abstract int size();
+
+    /**
+     * Checks whether this tree contains the given value.
+     * @param value     The value to search for.
+     * @return          Whether this tree contains value.
+     */
     abstract boolean contains(String value);
+
+    /**
+     * Inserts the given value into this tree.
+     * @param value     The value to insert.
+     * @return          The node into which the value was inserted.
+     */
     abstract BinarySearchTree insert(String value);
+
+    /**
+     * Converts this tree into a readable string.
+     * @return          The nodes of this tree in the format "(left_child)node(right_child)".
+     */
     public abstract String toString();
 }
 
+/**
+ * An empty binary search tree node.
+ */
 final class Empty extends BinarySearchTree {
     public Empty() {}
     public static final Empty EMPTY = new Empty();
@@ -232,6 +304,9 @@ final class Empty extends BinarySearchTree {
     }
 }
 
+/**
+ * A node in a binary search tree containing a value, an optional left child node, and an optional right child node.
+ */
 final class Node extends BinarySearchTree {
     private final String value;
     private final BinarySearchTree left;
