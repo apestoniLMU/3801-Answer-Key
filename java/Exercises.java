@@ -27,16 +27,16 @@ public class Exercises {
         return sentence.stream().filter(p).map(String::toLowerCase).findFirst();
     }
     // Write your say function here
-    static class Sentence {
+    static class Say {
         private List<String> words;
 
-        Sentence(List<String> sList, String word) {
+        Say(List<String> sList, String word) {
             this.words = new ArrayList<String>(sList);
             words.add(word);
         }
         
-        Sentence and(String newWord) {
-            return new Sentence(this.words, newWord);
+        Say and(String newWord) {
+            return new Say(this.words, newWord);
         }
         
         String phrase() {
@@ -57,12 +57,12 @@ public class Exercises {
         }
     }
 
-    static Sentence say(String word) {
-        return new Sentence(new ArrayList<String>(), word);
+    static Say say(String word) {
+        return new Say(new ArrayList<String>(), word);
     }
 
-    static Sentence say() {
-        return new Sentence(new ArrayList<String>(), "");
+    static Say say() {
+        return new Say(new ArrayList<String>(), "");
     }
 
     // Write your line count function here
