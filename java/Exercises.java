@@ -200,3 +200,78 @@ record Quaternion(double a, double b, double c, double d) {
 }
 // Write your BinarySearchTree sealed interface and its implementations here
 
+abstract sealed class BinarySearchTree permits Empty, Node {
+    abstract int size();
+    abstract boolean contains(String value);
+    abstract BinarySearchTree insert(String value);
+    public abstract String toString();
+}
+
+final class Empty extends BinarySearchTree {
+    public Empty() {}
+    public static final Empty EMPTY = new Empty();
+
+    @Override
+    int size() {
+        return 0;
+    }
+
+    @Override
+    boolean contains(String value) {
+        return false;
+    }
+
+    @Override
+    BinarySearchTree insert(String value) {
+        return new Node(value, EMPTY, EMPTY);
+    }
+
+    @Override
+    public String toString() {
+        return "()";
+    }
+}
+
+final class Node extends BinarySearchTree {
+    private final String value;
+    private final BinarySearchTree left;
+    private final BinarySearchTree right;
+
+    public Node(String value, BinarySearchTree left, BinarySearchTree right) {
+        this.value = value;
+        this.left = left;
+        this.right = right;
+    }
+
+    @Override
+    public int size() {
+        return left.size() + 1 + right.size();
+    }
+
+    @Override
+    public boolean contains(String value) {
+        if (value.equals(this.value)) {
+            return true;
+        } else if (value.compareTo(this.value) < 0) { // value < this.value
+            return left.contains(value);
+        } else {
+            return right.contains(value);
+        }
+    }
+
+    @Override
+    public BinarySearchTree insert(String value) {
+        if (value.equals(this.value)) {
+            return this; // No duplicates
+        } else if (value.compareTo(this.value) < 0) {
+            return new Node(this.value, left.insert(value), right);
+        } else {
+            return new Node(this.value, left, right.insert(value));
+        }
+    }
+
+    @Override
+    public String toString() {
+        return ("(" + left + value + right + ")").replace("()", "");
+    }
+}
