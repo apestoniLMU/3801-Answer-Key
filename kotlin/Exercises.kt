@@ -15,7 +15,6 @@ fun change(amount: Long): Map<Int, Long> {
     return counts
 }
 
-// Write your first then lower case function here
 /**
  *  A function when given a list of strings and a predicate, returns the lowercased
  *  version of the first string satisfying the given predicate. Otherwise, returns null.
@@ -28,7 +27,6 @@ fun firstThenLowerCase(strList: List<String>, predicate: (String) -> Boolean): S
     return strList.firstOrNull(predicate)?.lowercase()
 }
 
-// Write your say function here
 /**
  *  A class that can be optionally initialized with a string that possesses a
  *  read-only property 'phrase' which returns the concatenated string from
@@ -56,7 +54,6 @@ class say(private val sentence: String? = null) {
     val phrase: String
         get() = sentence ?: ""
 }
-// Write your meaningfulLineCount function here
 
 /**
  *  A function when given a file name, returns the number of lines that fulfill a certain set of rules.
@@ -92,7 +89,6 @@ fun meaningfulLineCount(fileName: String): Long {
     return meaningfulCount
 }
 
-// Write your Quaternion data class here
 /**
  *  Represents a quaternion: a four-value representation of three-dimensional rotation given four Double values.
  */
@@ -179,7 +175,6 @@ data class Quaternion(
     }
 }
 
-// Write your Binary Search Tree interface and implementing classes here
 /**
  *  A sealed interface used to implement empty and node binary search trees nested inside.
  *
