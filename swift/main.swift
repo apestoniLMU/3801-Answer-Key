@@ -63,9 +63,9 @@ expectSuccess(change(10000000000005), [25: 400000000000, 10: 0, 5: 1, 1: 0])
  expect(greet.and("nice").and("person").phrase == "Hello there nice person")
  expect(greet.and("Swift").phrase == "Hello there Swift")
 
-// suite("meaningfulLineCount");
-// await expectFailure(meaningfulLineCount("NoSuchFile.txt"))
-// await expectSuccess(meaningfulLineCount("../test-for-line-count.txt"), 5)
+ suite("meaningfulLineCount");
+ await expectFailure(meaningfulLineCount("NoSuchFile.txt"))
+ await expectSuccess(meaningfulLineCount("../test-for-line-count.txt"), 5)
 
  suite("Quaternion")
  let q = Quaternion(a: 3.5, b: 2.25, c: -100, d: -1.25)

@@ -16,18 +16,24 @@ func change(_ amount: Int) -> Result<[Int:Int], NegativeAmountError> {
 }
 
 /**
- Returns the first string in the given array that satisfies the given predicate, converted to lower-case.
+ Returns the first string in a given array that satisfies a given predicate.
+
+ - returns:
+ The first string in the given array satisfying the predicate, converted to lower-case.
+
+ - parameters:
+        - strings: The strings to search.
+        - predicate: The predicate to satisfy.
  */
 func firstThenLowerCase(of strings: [String], satisfying predicate: (String) -> Bool) -> String? {
     return strings.first(where: { predicate($0) })?.lowercased()
 }
 
 /**
- A structure that contains a "phrase" string. The "and" function can be used to generate a new instance
- that concatenates another string to the phrase.
+ A structure that contains a "phrase" string. The "and" function can be used to generate a new
+ instance that concatenates another string to the phrase.
  */
 struct say {
-    /** This instance's phrase. */
     let phrase: String
 
     /** Constructor to optionally initialize phrase. */
@@ -35,25 +41,39 @@ struct say {
         self.phrase = phrase;
     }
 
-    /** Returns a new say object with the given string appended to this instance's phrase, joined
-     by a space. */
+    /**
+     Returns a new say object with the given string appended to this instance's phrase.
+
+     - returns:
+     A new say instance with the the given string appended to this instance's phrase, joined
+     by a space.
+
+     - parameters:
+            - nextWord: The word to concatenate to this instance's phrase.
+     */
     func and(_ nextWord: String) -> say {
         return say(self.phrase + " " + nextWord)
     }
 }
 
-/** 
-Returns the number of lines in the given file that are NOT (1) empty, (2) all whitespace or
-(3) whose first non-whitespace character is "#".
+/**
+ Returns the number of lines in the given file that are NOT (1) empty, (2) all whitespace or
+ (3) whose first non-whitespace character is "#".
+
+ - returns:
+ The number of lines in the given file that meet the specified conditions. NoSuchFileError if
+ the file could not be found.
+
+ - parameters:
+        - filepath: The path to the file to read.
 */
-func meaningfulLineCount(_ filename: String) async -> Result<Int, NoSuchFileError> {
+func meaningfulLineCount(_ filepath: String) async -> Result<Int, NoSuchFileError> {
 	var count: Int = 0
 
 	// NOTE: You might need to import FoundationNetworking depending on your version.
-	let url: URL = URL(fileURLWithPath: filename)
+	let url: URL = URL(fileURLWithPath: filepath)
 	do {
 		for try await line in url.lines {
-			// Ignore empty lines, all-whitespace lines, and lines starting with "#".
 			let trimmed: String = line.trimmingCharacters(in: .whitespacesAndNewlines)
 			if (trimmed.isEmpty || trimmed.hasPrefix("#")) {
 				continue
@@ -83,7 +103,7 @@ struct Quaternion : CustomStringConvertible {
     static let J = Quaternion(a: 0, b: 0, c: 1, d: 0)
     static let K = Quaternion(a: 0, b: 0, c: 0, d: 1)
 
-    /** Constructor with optional properties. */
+    /** Constructor with optional property initialization. */
     init(a: Double = 0, b: Double = 0, c: Double = 0, d: Double = 0) {
         self.a = a
         self.b = b
@@ -91,7 +111,7 @@ struct Quaternion : CustomStringConvertible {
         self.d = d
     }
 
-    /** The coefficient values of this quaternion as an array. */
+    /** The coefficients of this quaternion as an array. */
     var coefficients: [Double] {
         return [self.a, self.b, self.c, self.d]
     }
@@ -106,7 +126,7 @@ struct Quaternion : CustomStringConvertible {
         )
     }
 
-    /** String representation of this quaternion. */
+    /** String representation of this quaternion, in the form "a + bi + cj + dk". */
     var description: String {
         // Special case for zero quaternion.
         if self == Quaternion.ZERO {
@@ -143,7 +163,9 @@ struct Quaternion : CustomStringConvertible {
     }
 }
 
-/** Adds two quaternions. */
+/**
+ Adds two quaternions.
+ */
 func + (left: Quaternion, right: Quaternion) -> Quaternion {
     return Quaternion(
         a: left.a + right.a,
@@ -153,7 +175,9 @@ func + (left: Quaternion, right: Quaternion) -> Quaternion {
     )
 }
 
-/** Multiplies two quaternions. */
+/**
+ Multiplies two quaternions.
+ */
 func * (left: Quaternion, right: Quaternion) -> Quaternion {
     return Quaternion(
         a: (left.a * right.a) - (left.b * right.b) - (left.c * right.c) - (left.d * right.d),
@@ -163,7 +187,9 @@ func * (left: Quaternion, right: Quaternion) -> Quaternion {
     )
 }
 
-/** Returns whether two quaternions are equal. */
+/**
+ Returns whether two quaternions are equal.
+ */
 func == (left: Quaternion, right: Quaternion) -> Bool {
     return
         (left.a == right.a &&
@@ -172,7 +198,9 @@ func == (left: Quaternion, right: Quaternion) -> Bool {
          left.d == right.d)
 }
 
-/** An enumeration representing a node in a binary search tree. */
+/**
+ An enumeration representing a node in a binary search tree.
+ */
 indirect enum BinarySearchTree : CustomStringConvertible {
 	// This is an empty child of a node.
 	case empty
