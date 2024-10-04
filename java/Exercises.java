@@ -36,7 +36,7 @@ public class Exercises {
         }
         
         Say and(String newWord) {
-            return new Say(this.words, newWord);
+            return new Say(this.words, " " + newWord);
         }
         
         String phrase() {
@@ -49,10 +49,9 @@ public class Exercises {
                 if(ret.equals("")) {
                     ret = each;
                 } else {
-                    ret += " " + each;
+                    ret += each;
                 }
             }
-
             return ret;
         }
     }
