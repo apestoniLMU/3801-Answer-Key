@@ -1,13 +1,10 @@
+import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 
 public class Exercises {
     static Map<Integer, Long> change(long amount) {
@@ -71,6 +68,8 @@ public class Exercises {
             .filter(line -> !line.trim().isEmpty())
             .filter(line -> !line.trim().startsWith("#"))
             .count();
+        } catch (Exception e) {
+            throw new FileNotFoundException("No such file");
         }
     }
 }
