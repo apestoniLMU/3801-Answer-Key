@@ -202,9 +202,9 @@ sealed interface BinarySearchTree {
     }
 
     data class Node(
-        val value: String,
-        val left: BinarySearchTree = Empty,
-        val right: BinarySearchTree = Empty
+        private val value: String,
+        private val left: BinarySearchTree = Empty,
+        private val right: BinarySearchTree = Empty
     ) : BinarySearchTree {
         override fun size(): Int = 1 + left.size() + right.size()
 
@@ -226,9 +226,7 @@ sealed interface BinarySearchTree {
         }
 
         override fun toString(): String {
-            val leftString = if (left is Empty) "" else "$left"
-            val rightString = if (right is Empty) "" else "$right"
-            return "($leftString$value$rightString)"
+            return "($left$value$right)".replace("()", "")
         }
     }
 }
