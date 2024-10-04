@@ -26,7 +26,10 @@ public class Exercises {
      * @return              The first string satisfying the predicate.
      */
     static Optional<String> firstThenLowerCase(List<String> strings, Predicate<String> predicate) {
-        return strings.stream().filter(predicate).map(String::toLowerCase).findFirst();
+        return strings.stream()
+        .filter(predicate)
+        .map(String::toLowerCase)
+        .findFirst();
     }
 
     /**
@@ -167,81 +170,81 @@ record Quaternion(double a, double b, double c, double d) {
      * @return      This quaternion's coefficients in the form "a + bi + cj + dk."
      */
     public String toString() {
-        String ret = "";
+        String toString = "";
         if (a==0 && b==0 && c==0 && d==0) {
             return "0";
         } 
 
         if (a != 0) {
-            ret += Double.toString(a);
+            toString += Double.toString(a);
         }
 
         if (b != 0) {
-            if(ret.isEmpty()) {
+            if(toString.isEmpty()) {
                 if(b == 1) {
-                    ret += "i";
+                    toString += "i";
                 } else if (b == -1) {
-                    ret += "-i";
+                    toString += "-i";
                 } else {
-                    ret += b + "i";
+                    toString += b + "i";
                 }
             } else {
                 if (b > 0) {
-                    ret += "+";
+                    toString += "+";
                 }
 
                 if(Math.abs(b) != 1) {
-                    ret += b + "i";
+                    toString += b + "i";
                 } else {
-                    ret += "i";
+                    toString += "i";
                 }
             }
         }
 
         if (c != 0) {
-            if(ret.isEmpty()) {
+            if(toString.isEmpty()) {
                 if(c == 1) {
-                    ret += "j";
+                    toString += "j";
                 } else if (c == -1) {
-                    ret += "-j";
+                    toString += "-j";
                 } else {
-                    ret += c + "j";
+                    toString += c + "j";
                 }
             } else {
                 if (c > 0) {
-                    ret += "+";
+                    toString += "+";
                 }
 
                 if(Math.abs(c) != 1) {
-                    ret += c + "j";
+                    toString += c + "j";
                 } else {
-                    ret += "j";
+                    toString += "j";
                 }
             }
         }
 
         if (d != 0) {
-            if(ret.isEmpty()) {
+            if(toString.isEmpty()) {
                 if(d == 1) {
-                    ret += "k";
+                    toString += "k";
                 } else if (d == -1) {
-                    ret += "-k";
+                    toString += "-k";
                 } else {
-                    ret += d + "k";
+                    toString += d + "k";
                 }
             } else {
                 if (d > 0) {
-                    ret += "+";
+                    toString += "+";
                 }
 
                 if(Math.abs(d) != 1) {
-                    ret += d + "k";
+                    toString += d + "k";
                 } else {
-                    ret += "k";
+                    toString += "k";
                 }
             }
         }
-        return ret;
+        return toString;
     }
 }
 
