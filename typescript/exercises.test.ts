@@ -2,7 +2,7 @@ import { describe, it } from "node:test"
 import { deepEqual, throws, rejects } from "node:assert/strict"
 import {
   change,
-  // firstThenApply,
+  firstThenApply,
   // powersGenerator,
   // meaningfulLineCount,
   // Shape,
@@ -49,33 +49,32 @@ describe("The change function", () => {
 })
 
 // Uncomment the following tests as you complete the exercises
-
-// describe("The firstThenApply function", () => {
-//   const nonEmpty = (s: string) => s !== ""
-//   const lengthGreaterThan3 = (s: string) => s.length > 3
-//   const lower = (s: string) => s.toLowerCase()
-//   const square = (n: number) => n * n
-//   it("works", () => {
-//     deepEqual(firstThenApply([], nonEmpty, lower), undefined)
-//     deepEqual(firstThenApply(["", "A", "B"], nonEmpty, lower), "a")
-//     deepEqual(
-//       firstThenApply(["", "A", "ABC"], lengthGreaterThan3, lower),
-//       undefined
-//     )
-//     deepEqual(
-//       firstThenApply(["ABC", "ABCD", "ABCDE"], lengthGreaterThan3, lower),
-//       "abcd"
-//     )
-//     deepEqual(
-//       firstThenApply([1, 2, 3], (n) => n > 1, square),
-//       4
-//     )
-//     deepEqual(
-//       firstThenApply([1, 2, 3], (n) => n > 3, square),
-//       undefined
-//     )
-//   })
-// })
+describe("The firstThenApply function", () => {
+  const nonEmpty = (s: string) => s !== ""
+  const lengthGreaterThan3 = (s: string) => s.length > 3
+  const lower = (s: string) => s.toLowerCase()
+  const square = (n: number) => n * n
+  it("works", () => {
+    deepEqual(firstThenApply([], nonEmpty, lower), undefined)
+    deepEqual(firstThenApply(["", "A", "B"], nonEmpty, lower), "a")
+    deepEqual(
+      firstThenApply(["", "A", "ABC"], lengthGreaterThan3, lower),
+      undefined
+    )
+    deepEqual(
+      firstThenApply(["ABC", "ABCD", "ABCDE"], lengthGreaterThan3, lower),
+      "abcd"
+    )
+    deepEqual(
+      firstThenApply([1, 2, 3], (n) => n > 1, square),
+      4
+    )
+    deepEqual(
+      firstThenApply([1, 2, 3], (n) => n > 3, square),
+      undefined
+    )
+  })
+})
 
 // describe("The powers generator", () => {
 //   it("works as expected", () => {

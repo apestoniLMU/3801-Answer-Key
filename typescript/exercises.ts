@@ -13,7 +13,29 @@ export function change(amount: bigint): Map<bigint, bigint> {
   return counts
 }
 
-// Write your first then apply function here
+/**
+ * Returns the result of a function applied to the first item in the given
+ * array that satisfies the given predicate.
+ *
+ * @param items - The array of items to search.
+ * @param predicate - The predicate to satisfy.
+ * @param consumer - The function to apply to the first item satisfying the predicate.
+ * @returns The result of consumer applied to the first element in items that satisfies predicate. Undefined if no item
+ * satisfies predicate.
+ * */
+export function firstThenApply<T, U>(
+    items: T[],
+    predicate: (item: T) => boolean,
+    consumer: (item: T) => U
+): U | undefined {
+  for (const item of items) {
+    if (predicate(item)) {
+      return consumer(item);
+    }
+  }
+
+  return undefined;
+}
 
 // Write your powers generator here
 
