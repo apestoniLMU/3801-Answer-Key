@@ -37,7 +37,17 @@ export function firstThenApply<T, U>(
   return undefined;
 }
 
-// Write your powers generator here
+/**
+ * Yields an infinite sequence of powers of a given base.
+ *
+ * @param base - The base of which to generator powers.
+ * @yields Sequential powers of the base (b^0, b^1, etc.).
+ */
+export function* powersGenerator(base: bigint): Generator<bigint> {
+  for (let power = 1n; ; power *= base) {
+    yield power;
+  }
+}
 
 // Write your line count function here
 

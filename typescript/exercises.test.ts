@@ -3,7 +3,7 @@ import { deepEqual, throws, rejects } from "node:assert/strict"
 import {
   change,
   firstThenApply,
-  // powersGenerator,
+  powersGenerator,
   // meaningfulLineCount,
   // Shape,
   // BinarySearchTree,
@@ -76,25 +76,25 @@ describe("The firstThenApply function", () => {
   })
 })
 
-// describe("The powers generator", () => {
-//   it("works as expected", () => {
-//     const g1 = powersGenerator(2n)
-//     deepEqual(g1.next(), { value: 1n, done: false })
-//     deepEqual(g1.next(), { value: 2n, done: false })
-//     for (let i = 0; i < 98; i++) g1.next()
-//     deepEqual(g1.next(), {
-//       value: 1267650600228229401496703205376n,
-//       done: false,
-//     })
+describe("The powers generator", () => {
+  it("works as expected", () => {
+    const g1 = powersGenerator(2n)
+    deepEqual(g1.next(), { value: 1n, done: false })
+    deepEqual(g1.next(), { value: 2n, done: false })
+    for (let i = 0; i < 98; i++) g1.next()
+    deepEqual(g1.next(), {
+      value: 1267650600228229401496703205376n,
+      done: false,
+    })
 
-//     const g2 = powersGenerator(3n)
-//     deepEqual(g2.next(), { value: 1n, done: false })
-//     deepEqual(g2.next(), { value: 3n, done: false })
-//     deepEqual(g2.next(), { value: 9n, done: false })
-//     deepEqual(g2.next(), { value: 27n, done: false })
-//     deepEqual(g2.next(), { value: 81n, done: false })
-//   })
-// })
+    const g2 = powersGenerator(3n)
+    deepEqual(g2.next(), { value: 1n, done: false })
+    deepEqual(g2.next(), { value: 3n, done: false })
+    deepEqual(g2.next(), { value: 9n, done: false })
+    deepEqual(g2.next(), { value: 27n, done: false })
+    deepEqual(g2.next(), { value: 81n, done: false })
+  })
+})
 
 // describe("The meaningfulLineCount function", async () => {
 //   await it("throws if no such file", async () => {
