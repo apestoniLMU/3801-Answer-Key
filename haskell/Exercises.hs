@@ -1,6 +1,8 @@
 module Exercises
     ( change,
-      -- put the proper exports here
+      firstThenApply,
+      powers,
+      meaningfulLineCount
     ) where
 
 import qualified Data.Map as Map
@@ -21,10 +23,24 @@ change amount
                 newCounts = Map.insert d count counts
 
 -- Write your first then apply function here
+firstThenApply :: [a] -> (a -> Bool) -> (a -> b) -> Maybe b
+firstThenApply xs predicate func = fmap func (find predicate xs)
 
 -- Write your infinite powers generator here
+powers :: Integral x => x -> [x]
+powers base = map (base^) [0..]
 
--- Write your line count function here
+-- Helper function for line filtering readability
+isValidLine :: String -> Bool
+isValidLine line = not (null stripped) && head stripped /= '#'
+  where stripped = dropWhile isSpace line
+
+meaningfulLineCount :: FilePath -> IO Int
+meaningfulLineCount filePath = do
+  text <- readFile filePath
+  let linesOfText = lines text
+  let validLines = filter isValidLine linesOfText
+  return (length validLines)
 
 -- Write your shape data type here
 

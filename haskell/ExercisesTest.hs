@@ -22,18 +22,18 @@ fixture =
     , ( "change 100000000037", test_change 100000000037 (4000000001, 1, 0, 2) )
     , ( "change 10000000000005", test_change 10000000000005 (400000000000, 0, 1, 0) )
     -- Uncomment the following lines as you implement the functions
-    -- , ( "firstThenApply empty list", (firstThenApply [] (/= "") lower) == Nothing )
-    -- , ( "firstThenApply lowercase ok", (firstThenApply ["", "A", "B"] (/= "") lower) == Just "a" )
-    -- , ( "firstThenApply lengthOver3 no match"
-    --   , (firstThenApply ["", "A", "ABC"] lengthOverThree lower == Nothing ))
-    -- , ( "firstThenApply lengthOver3 match"
-    --   , (firstThenApply ["ABC", "ABCD", "ABCDE"] lengthOverThree lower == Just "abcd" ))
-    -- , ( "firstThenApply square no match", (firstThenApply [1, 2, 3] (> 3) (^ 2) == Nothing ))
-    -- , ( "firstThenApply square match", (firstThenApply [1, 2, 3] (> 1) (^ 2) == Just 4 ))
-    -- , ( "powers of 2", take 10 (powers 2) == [1,2,4,8,16,32,64,128,256,512])
-    -- , ( "powers of 3", take 5 (powers 3) == [1,3,9,27,81])
-    -- , ( "powers of 1000000", (powers (1000000::Integer) !! 30) == 10^180)
-    -- , ( "powers of -1", take 10 (powers (-1)) == [1,-1,1,-1,1,-1,1,-1,1,-1])
+    , ( "firstThenApply empty list", (firstThenApply [] (/= "") lower) == Nothing )
+    , ( "firstThenApply lowercase ok", (firstThenApply ["", "A", "B"] (/= "") lower) == Just "a" )
+    , ( "firstThenApply lengthOver3 no match"
+      , (firstThenApply ["", "A", "ABC"] lengthOverThree lower == Nothing ))
+    , ( "firstThenApply lengthOver3 match"
+      , (firstThenApply ["ABC", "ABCD", "ABCDE"] lengthOverThree lower == Just "abcd" ))
+    , ( "firstThenApply square no match", (firstThenApply [1, 2, 3] (> 3) (^ 2) == Nothing ))
+    , ( "firstThenApply square match", (firstThenApply [1, 2, 3] (> 1) (^ 2) == Just 4 ))
+    , ( "powers of 2", take 10 (powers 2) == [1,2,4,8,16,32,64,128,256,512])
+    , ( "powers of 3", take 5 (powers 3) == [1,3,9,27,81])
+    , ( "powers of 1000000", (powers (1000000::Integer) !! 30) == 10^180)
+    , ( "powers of -1", take 10 (powers (-1)) == [1,-1,1,-1,1,-1,1,-1,1,-1])
     -- , ( "volume of sphere radius 1", volume (Sphere 1) `is_approx` (4 * pi / 3))
     -- , ( "volume of sphere radius 2", volume (Sphere 2) `is_approx` (32 * pi / 3))
     -- , ( "surfaceArea of sphere radius 1", surfaceArea (Sphere 1) `is_approx` (4 * pi))
@@ -58,8 +58,8 @@ fixture =
     ]
     -- Uncomment the following as needed as you implement your tests
     where
-        -- lower = unpack . toLower . pack
-        -- lengthOverThree = (> 3) . length
+        lower = unpack . toLower . pack
+        lengthOverThree = (> 3) . length
         -- x `is_approx` y = abs (x - y) < 0.0000001
         -- g = insert "G" Empty
         -- gb = insert "B" g
@@ -72,9 +72,9 @@ main =
         putStrLn $ unlines $ map fst results
         failed <- return $ sum $ map snd results
         passed <- return $ length fixture - failed
-        -- shouldBe5 <- meaningfulLineCount "../test-for-line-count.txt"
-        -- passed <- return $ passed + (if shouldBe5 == 5 then 1 else 0)
-        -- failed <- return $ failed + (if shouldBe5 == 5 then 0 else 1)
+        shouldBe5 <- meaningfulLineCount "../test-for-line-count.txt"
+        passed <- return $ passed + (if shouldBe5 == 5 then 1 else 0)
+        failed <- return $ failed + (if shouldBe5 == 5 then 0 else 1)
         printf "%d passed, %d failed\n" passed failed
         where
             test (message, condition) =
