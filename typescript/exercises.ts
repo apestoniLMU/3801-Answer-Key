@@ -30,7 +30,7 @@ export function firstThenApply<T, U>(
 ): U | undefined {
   for (const item of items) {
     if (predicate(item)) {
-      return consumer(item);
+      return consumer(item)
     }
   }
 
@@ -45,7 +45,7 @@ export function firstThenApply<T, U>(
  */
 export function* powersGenerator(base: bigint): Generator<bigint> {
   for (let power = 1n; ; power *= base) {
-    yield power;
+    yield power
   }
 }
 
@@ -54,20 +54,63 @@ export function* powersGenerator(base: bigint): Generator<bigint> {
  * character is not '#'.
  *
  * @param filePath - The path to the file whose lines will be counted. Throws an error if the path is not valid.
+ * @returns The number of lines in the given file that satisfy specified requirements.
  */
 export async function meaningfulLineCount(filePath: string): Promise<number> {
-  let count = 0;
-  const file = await open(filePath, 'r');
+  let count = 0
+  const file = await open(filePath, 'r')
 
   for await(const line of file.readLines()) {
     if ((line !== "") && (line.trim() !== "") && (line.trim()[0] !== "#")) {
-      count++;
+      count++
     }
   }
 
-  return count;
+  return count
 }
 
-// Write your shape type and associated functions here
+interface Box {
+  kind: "Box",
+  width: number,
+  length: number,
+  depth: number
+}
+
+interface Sphere {
+  kind: "Sphere",
+  radius: number
+}
+
+export type Shape = Box | Sphere;
+
+/**
+ * Computes the surface area of the given shape.
+ *
+ * @param shape - The shape whose surface area will be calculated (a box or a sphere).
+ * @returns The surface area of the given shape.
+ */
+export function surfaceArea(shape: Shape): number {
+  switch (shape.kind) {
+    case "Box":
+      return 2 * ((shape.width * shape.length) + (shape.length * shape.depth) + (shape.depth * shape.width))
+    case "Sphere":
+      return 4 * Math.PI * (shape.radius ** 2)
+  }
+}
+
+/**
+ * Computers the volume of the given shape.
+ *
+ * @param shape - The shape whose volume will be calculated (a box or a sphere).
+ * @returns The volume of the given shape.
+ */
+export function volume(shape: Shape): number {
+  switch (shape.kind) {
+    case "Box":
+      return shape.width * shape.length * shape.depth
+    case "Sphere":
+      return (4 / 3) * Math.PI * (shape.radius ** 3)
+  }
+}
 
 // Write your binary search tree implementation here

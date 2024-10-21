@@ -5,11 +5,11 @@ import {
   firstThenApply,
   powersGenerator,
   meaningfulLineCount,
-  // Shape,
+  Shape,
   // BinarySearchTree,
   // Empty,
-  // volume,
-  // surfaceArea,
+  volume,
+  surfaceArea,
 } from "./exercises.js"
 
 function expectChange(
@@ -106,18 +106,18 @@ describe("The meaningfulLineCount function", async () => {
   })
 })
 
-// describe("The shape functions", () => {
-//   const sphere: Shape = { kind: "Sphere", radius: 5 }
-//   const box: Shape = { kind: "Box", width: 3, length: 4, depth: 5 }
-//   it("calculates volumes correctly", () => {
-//     deepEqual(volume(sphere), 523.5987755982989)
-//     deepEqual(volume(box), 60)
-//   })
-//   it("calculates surface areas correctly", () => {
-//     deepEqual(surfaceArea(sphere), 314.1592653589793)
-//     deepEqual(surfaceArea(box), 94)
-//   })
-// })
+describe("The shape functions", () => {
+  const sphere: Shape = { kind: "Sphere", radius: 5 }
+  const box: Shape = { kind: "Box", width: 3, length: 4, depth: 5 }
+  it("calculates volumes correctly", () => {
+    deepEqual(volume(sphere), 523.5987755982989)
+    deepEqual(volume(box), 60)
+  })
+  it("calculates surface areas correctly", () => {
+    deepEqual(surfaceArea(sphere), 314.1592653589793)
+    deepEqual(surfaceArea(box), 94)
+  })
+})
 
 // describe("The BinarySearchTree class", () => {
 //   let t: BinarySearchTree<string>
