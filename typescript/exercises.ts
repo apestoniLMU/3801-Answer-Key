@@ -49,7 +49,24 @@ export function* powersGenerator(base: bigint): Generator<bigint> {
   }
 }
 
-// Write your line count function here
+/**
+ * Returns the number of lines in the given file that are (1) not empty, (2) not all whitespace, and (3) whose first
+ * character is not '#'.
+ *
+ * @param filePath - The path to the file whose lines will be counted. Throws an error if the path is not valid.
+ */
+export async function meaningfulLineCount(filePath: string): Promise<number> {
+  let count = 0;
+  const file = await open(filePath, 'r');
+
+  for await(const line of file.readLines()) {
+    if ((line !== "") && (line.trim() !== "") && (line.trim()[0] !== "#")) {
+      count++;
+    }
+  }
+
+  return count;
+}
 
 // Write your shape type and associated functions here
 
