@@ -34,37 +34,37 @@ fixture =
     , ( "powers of 3", take 5 (powers 3) == [1,3,9,27,81])
     , ( "powers of 1000000", (powers (1000000::Integer) !! 30) == 10^180)
     , ( "powers of -1", take 10 (powers (-1)) == [1,-1,1,-1,1,-1,1,-1,1,-1])
-    -- , ( "volume of sphere radius 1", volume (Sphere 1) `is_approx` (4 * pi / 3))
-    -- , ( "volume of sphere radius 2", volume (Sphere 2) `is_approx` (32 * pi / 3))
-    -- , ( "surfaceArea of sphere radius 1", surfaceArea (Sphere 1) `is_approx` (4 * pi))
-    -- , ( "surfaceArea of sphere radius 2", surfaceArea (Sphere 2) `is_approx` (16 * pi))
-    -- , ( "box volume", volume (Box 1.5 3 20) == 90)
-    -- , ( "box surfaceArea", surfaceArea (Box 1.5 3 20) == 189)
-    -- , ( "spheres are equatable", (Sphere 6.28) == (Sphere 6.28))
-    -- , ( "boxes are equatable", (Box 2 10 3) == (Box 2 10 3))
-    -- , ( "spheres can be shown", (show $ Sphere 3) == "Sphere 3.0")
-    -- , ( "boxes can be shown", (show $ Box 3 1 2) == "Box 3.0 1.0 2.0")
-    -- , ( "new tree size is 0", size Empty == 0)
-    -- , ( "new tree contains nothing", not $ contains 5 Empty)
-    -- , ( "new tree shows as ()", show (Empty::BST Int) == "()")
-    -- , ( "inserting G", show g == "(\"G\")")
-    -- , ( "inserting G then B", show gb == "((\"B\")\"G\")")
-    -- , ( "inserting G then B then D", show gbd == "((\"B\"(\"D\"))\"G\")")
-    -- , ( "number tree", show tree_52381 == "(((1)2(3))5(8))")
-    -- , ( "number tree with extra", show (insert 0 tree_52381) == "((((0)1)2(3))5(8))")
-    -- , ( "number tree did not change", show tree_52381 == "(((1)2(3))5(8))")
-    -- , ( "number tree inoder empty", inorder (Empty::BST Int) == [])
-    -- , ( "number tree inorder", inorder tree_52381 == [1, 2, 3, 5, 8])
+    , ( "volume of sphere radius 1", volume (Sphere 1) `is_approx` (4 * pi / 3))
+    , ( "volume of sphere radius 2", volume (Sphere 2) `is_approx` (32 * pi / 3))
+    , ( "surfaceArea of sphere radius 1", surfaceArea (Sphere 1) `is_approx` (4 * pi))
+    , ( "surfaceArea of sphere radius 2", surfaceArea (Sphere 2) `is_approx` (16 * pi))
+    , ( "box volume", volume (Box 1.5 3 20) == 90)
+    , ( "box surfaceArea", surfaceArea (Box 1.5 3 20) == 189)
+    , ( "spheres are equatable", (Sphere 6.28) == (Sphere 6.28))
+    , ( "boxes are equatable", (Box 2 10 3) == (Box 2 10 3))
+    , ( "spheres can be shown", (show $ Sphere 3) == "Sphere 3.0")
+    , ( "boxes can be shown", (show $ Box 3 1 2) == "Box 3.0 1.0 2.0")
+    , ( "new tree size is 0", size Empty == 0)
+    , ( "new tree contains nothing", not $ contains 5 Empty)
+    , ( "new tree shows as ()", show (Empty::BST Int) == "()")
+    , ( "inserting G", show g == "(\"G\")")
+    , ( "inserting G then B", show gb == "((\"B\")\"G\")")
+    , ( "inserting G then B then D", show gbd == "((\"B\"(\"D\"))\"G\")")
+    , ( "number tree", show tree_52381 == "(((1)2(3))5(8))")
+    , ( "number tree with extra", show (insert 0 tree_52381) == "((((0)1)2(3))5(8))")
+    , ( "number tree did not change", show tree_52381 == "(((1)2(3))5(8))")
+    , ( "number tree inoder empty", inorder (Empty::BST Int) == [])
+    , ( "number tree inorder", inorder tree_52381 == [1, 2, 3, 5, 8])
     ]
     -- Uncomment the following as needed as you implement your tests
     where
         lower = unpack . toLower . pack
         lengthOverThree = (> 3) . length
-        -- x `is_approx` y = abs (x - y) < 0.0000001
-        -- g = insert "G" Empty
-        -- gb = insert "B" g
-        -- gbd = insert "D" gb
-        -- tree_52381 = insert 1 $ insert 8 $ insert 3 $ insert 2 $ insert 5 Empty
+        x `is_approx` y = abs (x - y) < 0.0000001
+        g = insert "G" Empty
+        gb = insert "B" g
+        gbd = insert "D" gb
+        tree_52381 = insert 1 $ insert 8 $ insert 3 $ insert 2 $ insert 5 Empty
 
 main =
     -- You'll have to do some uncommenting here too!
