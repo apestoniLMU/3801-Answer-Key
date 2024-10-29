@@ -65,20 +65,16 @@ surfaceArea (Box width height depth) = 2 * (width * height + width * depth + hei
 surfaceArea (Sphere radius) = 4 * pi * radius^2
 
 -- Write your binary search tree algebraic type here
-
--- Define the BST type as an algebraic data type with a private Node constructor
 data BST a = Empty | Node a (BST a) (BST a)
     deriving (Eq)
 
--- Insertion function for the binary search tree
 insert :: Ord a => a -> BST a -> BST a
 insert x Empty = Node x Empty Empty
 insert x (Node y left right)
     | x < y     = Node y (insert x left) right
     | x > y     = Node y left (insert x right)
-    | otherwise = Node y left right  -- Ignore duplicates
+    | otherwise = Node y left right
 
--- Lookup function to check if an element exists in the tree
 contains :: Ord a => a -> BST a -> Bool
 contains _ Empty = False
 contains x (Node y left right)
@@ -86,17 +82,14 @@ contains x (Node y left right)
     | x > y     = contains x right
     | otherwise = True
 
--- Function to count the number of elements in the tree
 size :: BST a -> Int
 size Empty = 0
 size (Node _ left right) = 1 + size left + size right
 
--- Inorder traversal function that produces a list of elements in sorted order
 inorder :: BST a -> [a]
 inorder Empty = []
 inorder (Node x left right) = inorder left ++ [x] ++ inorder right
 
--- Show function to create a string representation of the tree
 instance (Show a) => Show (BST a) where
   show :: Show a => BST a -> String
   show Empty = "()"
