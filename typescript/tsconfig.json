@@ -7,3 +7,7 @@
     "moduleResolution": "nodenext"
   }
 }
+
+/* NOTE: This config isn't always being seen by the compiler. Use this command to run it from the command line:
+tsc --strict --outDir dist --module nodenext --target esnext --moduleResolution nodenext exercises.test.ts
+*/
