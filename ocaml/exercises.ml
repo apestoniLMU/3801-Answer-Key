@@ -1,14 +1,8 @@
 exception Negative_Amount
 
-(** 
-    Calculates the number of coins needed to make change for a given amount.
-
-    @param amount The amount of money to make change for.
-    @raise Negative_Amount If the amount is negative.
-    @return A list of integers representing the number of coins of each denomination.
-*)
 let change amount =
-  if amount < 0 then raise Negative_Amount
+  if amount < 0 then
+    raise Negative_Amount
   else
     let denominations = [ 25; 10; 5; 1 ] in
     let rec aux remaining denominations =
@@ -18,37 +12,22 @@ let change amount =
     in
     aux amount denominations
 
-(** 
-    Applies a transformation to the first element of a list that satisfies a given predicate.
-
-    @param item The list of elements to search through.
-    @param predicate A function that returns true for the element to transform.
-    @param transform A function to apply to the first matching element.
-    @return An option type that contains the transformed element or None if no match is found.
-*)
-let rec first_then_apply item predicate transform =
+(* Returns the application of a given function applied to the first item in the given list that satisfies the given
+ * predicate. *)
+let rec first_then_apply (item : 'a list) (pred : 'a -> bool) (func : 'a -> 'b option) : 'b option =
   match item with
   | [] -> None
   | x :: xs ->
-      if predicate x then transform x
-      else first_then_apply xs predicate transform
+  	if pred x then func x
+    else first_then_apply xs pred func
 
-(** 
-    Generates a sequence of powers of a given base.
-
-    @param base The base to raise to increasing powers.
-    @return A sequence of powers of the base.
-*)
+(* Generates an infinite sequence of powers of a given base. *)
 let powers_generator base =
   let rec generate_power n () = Seq.Cons (n, generate_power (n * base)) in
   generate_power 1
 
-(** 
-    Counts the number of meaningful (non-empty and non-comment) lines in a file.
-
-    @param filename The name of the file to analyze.
-    @return The count of meaningful lines in the file.
-*)
+(* Returns the number of lines in the given file that are (1) not empty, (2) not all whitespace, and (3) whose first
+ * character is not '#'. *)
 let meaningful_line_count filename =
   let channel = open_in filename in
   let rec count_lines count =
@@ -63,60 +42,33 @@ let meaningful_line_count filename =
   in
   count_lines 0
 
-(** 
-    Type representing different shapes. 
-    Either a Sphere with a radius or a Box with length, width, and height. 
-*)
+(* Type representing a shape. Shapes implement methods for calculating their volume and surface area. *)
 type shape = Sphere of float | Box of float * float * float
 
-(** 
-    Calculates the volume of a given shape.
-
-    @param s The shape for which to calculate the volume.
-    @return The volume of the shape as a float.
-*)
+(* Calculates the volume of a given shape. *)
 let volume s =
   match s with
   | Sphere r -> Float.pi *. (r ** 3.) *. 4. /. 3.
   | Box (l, w, h) -> l *. w *. h
 
-(** 
-    Calculates the surface area of a given shape.
-
-    @param s The shape for which to calculate the surface area.
-    @return The surface area of the shape as a float.
-*)
+(* Calculates the surface area of a given shape. *)
 let surface_area s =
   match s with
   | Sphere r -> 4. *. Float.pi *. (r ** 2.)
   | Box (l, w, h) -> 2. *. ((l *. w) +. (l *. h) +. (w *. h))
 
-(** 
-    Type representing a binary search tree. 
-    Can be empty or contain a node with a value and two subtrees. 
-*)
+(* Type representing an empty or non-empty node in a binary search tree. *)
 type 'a binary_search_tree =
   | Empty
   | Node of 'a binary_search_tree * 'a * 'a binary_search_tree
 
-(** 
-    Calculates the size (number of nodes) of a binary search tree.
-
-    @param tree The binary search tree.
-    @return The number of nodes in the tree.
-*)
+(* Returns the size of a binary search tree. *)
 let rec size tree =
   match tree with
   | Empty -> 0
   | Node (left, _, right) -> 1 + size left + size right
 
-(** 
-    Checks if a value is contained in a binary search tree.
-
-    @param value The value to search for.
-    @param tree The binary search tree.
-    @return True if the value is found, otherwise false.
-*)
+(* Returns whether a value is contained in a binary search tree. *)
 let rec contains value tree =
   match tree with
   | Empty -> false
@@ -125,24 +77,13 @@ let rec contains value tree =
       else if value < v then contains value left
       else contains value right
 
-(** 
-    Returns an inorder traversal of the binary search tree as a list.
-
-    @param tree The binary search tree.
-    @return A list of values in inorder.
-*)
+(* Returns an in-order traversal of a binary search tree as a list. *)
 let rec inorder tree =
   match tree with
   | Empty -> []
   | Node (left, v, right) -> inorder left @ [ v ] @ inorder right
 
-(** 
-    Inserts a value into a binary search tree
-
-    @param value The value to insert.
-    @param tree The binary search tree.
-    @return The new tree with the value inserted.
-*)
+(* Inserts a value into a binary search tree. *)
 let rec insert value tree =
   match tree with
   | Empty -> Node (Empty, value, Empty)
