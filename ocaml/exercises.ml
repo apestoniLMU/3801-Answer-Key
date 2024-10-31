@@ -51,15 +51,15 @@ let powers_generator base =
 *)
 let meaningful_line_count filename =
   let channel = open_in filename in
-  let rec count_lines access =
+  let rec count_lines count =
     try
       let line = input_line channel |> String.trim in
       if line <> "" && not (String.starts_with ~prefix:"#" line) then
-        count_lines (access + 1)
-      else count_lines access
+        count_lines (count + 1)
+      else count_lines count
     with End_of_file ->
       close_in channel;
-      access
+      count
   in
   count_lines 0
 
