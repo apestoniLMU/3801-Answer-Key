@@ -5,7 +5,7 @@
 * Axel Pestoni (@[apestoniLMU](https://github.com/apestoniLMU))
 * Sam Reitich (@[sreitich](https://github.com/sreitich))
 * Eren Unsal (@[Cyrendex](https://github.com/Cyrendex))
-* Mehmet Colakoglu(@[mcolakoglu](https://github.com/Mehmet-Colak))
+* Mehmet Colakoglu (@[mcolakoglu](https://github.com/Mehmet-Colak))
 
 
 
@@ -31,6 +31,16 @@ This assignment re-implements 4 of the previous exercises in new languages, and 
 * **Meaningful Line Count:** Identical in functionality to the previous function of the same name: returns the number of lines in a given file that are not (1) empty, (2) made entirely of whitespace, or (3) whose first non-whitespace character is '#'.
 * **Quaternion:** A class, record, or struct (depending on the language in which it was implemented) representing a mathematical quaternion. Identical structure and behavior to the **Quaternion** class in the previous exercise. Adds a collection of useful constant static members: quaternions for `zero`, `I`, `J`, and `K`. 
 * **Binary Search Tree:** A simple binary search tree with methods for inserting nodes, calculating the tree's size, checking if the tree contains a given value, and printing the tree's structure as a string. Implemented as a sealed interface (Java, Kotlin) or an enumeration (Swift), rather than a class or structure.
+
+### Homework 3:
+
+This assignment re-implements 4 previous exercises—using new paradigms—and 1 new exercise:
+
+* **First, then Apply:** A more powerful variant of previously-implemented **First, then Lower-Case** functions. Rather than applying a to-lower-case function to the first satisfactory element in a list of strings, this function takes in a list of generics, and applies a function given as a parameter to the first satisfactory element.
+* **Powers Generator:** Identical in functionality to the previous function of the same name. @See **Powers Generator** in homework 1.
+* **Meaningful Line Count:** Identical in functionality to the previous functions of the same name. @See **Meaningful Line Count** in homeworks 1 and 2.
+* **Shape:** A variant data type representing a three-dimensional geometric shape, which implements methods for calculating volume and surface area. Implemented variants are `Box` and `Sphere`. 
+* **Binary Search Tree:** A simple binary search tree with similar functionality to the one implemented in homework 2. Implemented as an algebraic data type, rather than classes or structures.
 
 ------
 
