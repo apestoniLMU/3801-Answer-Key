@@ -29,18 +29,21 @@ let powers_generator base =
 (* Returns the number of lines in the given file that are (1) not empty, (2) not all whitespace, and (3) whose first
  * character is not '#'. *)
 let meaningful_line_count filename =
-  let channel = open_in filename in
-  let rec count_lines count =
-    try
-      let line = input_line channel |> String.trim in
-      if line <> "" && not (String.starts_with ~prefix:"#" line) then
-        count_lines (count + 1)
-      else count_lines count
-    with End_of_file ->
-      close_in channel;
-      count
+  let is_meaningful_line line =
+    let trimmed_string = String.trim line in
+    trimmed_string <> "" && not (String.starts_with ~prefix:"#" trimmed_string)
   in
-  count_lines 0
+
+  let file = open_in filename in
+  let finally () = close_in file in
+
+  let rec count_meaningful_lines count =
+    match input_line file with
+    | line -> count_meaningful_lines (if is_meaningful_line line then count + 1 else count)
+    | exception End_of_file -> count
+  in
+
+  Fun.protect ~finally (fun () -> count_meaningful_lines 0)
 
 (* Type representing a shape. Shapes implement methods for calculating their volume and surface area. *)
 type shape = Sphere of float | Box of float * float * float
