@@ -22,14 +22,15 @@ let rec first_then_apply (item : 'a list) (pred : 'a -> bool) (func : 'a -> 'b o
     else first_then_apply xs pred func
 
 (* Generates an infinite sequence of powers of a given base. *)
-let powers_generator base =
+let powers_generator (base: int) : int Seq.t =
   let rec generate_power n () = Seq.Cons (n, generate_power (n * base)) in
   generate_power 1
 
+
 (* Returns the number of lines in the given file that are (1) not empty, (2) not all whitespace, and (3) whose first
  * character is not '#'. *)
-let meaningful_line_count filename =
-  let is_meaningful_line line =
+let meaningful_line_count (filename: string) : int =
+  let is_meaningful_line (line: string) : bool =
     let trimmed_string = String.trim line in
     trimmed_string <> "" && not (String.starts_with ~prefix:"#" trimmed_string)
   in
@@ -37,7 +38,7 @@ let meaningful_line_count filename =
   let file = open_in filename in
   let finally () = close_in file in
 
-  let rec count_meaningful_lines count =
+  let rec count_meaningful_lines (count: int) : int =
     match input_line file with
     | line -> count_meaningful_lines (if is_meaningful_line line then count + 1 else count)
     | exception End_of_file -> count
@@ -49,14 +50,14 @@ let meaningful_line_count filename =
 type shape = Sphere of float | Box of float * float * float
 
 (* Calculates the volume of a given shape. *)
-let volume s =
-  match s with
+let volume (shape: shape) : float =
+  match shape with
   | Sphere r -> Float.pi *. (r ** 3.) *. 4. /. 3.
   | Box (l, w, h) -> l *. w *. h
 
 (* Calculates the surface area of a given shape. *)
-let surface_area s =
-  match s with
+let surface_area (shape: shape) : float =
+  match shape with
   | Sphere r -> 4. *. Float.pi *. (r ** 2.)
   | Box (l, w, h) -> 2. *. ((l *. w) +. (l *. h) +. (w *. h))
 
@@ -66,13 +67,13 @@ type 'a binary_search_tree =
   | Node of 'a binary_search_tree * 'a * 'a binary_search_tree
 
 (* Returns the size of a binary search tree. *)
-let rec size tree =
+let rec size (tree: 'a binary_search_tree) : int =
   match tree with
   | Empty -> 0
   | Node (left, _, right) -> 1 + size left + size right
 
 (* Returns whether a value is contained in a binary search tree. *)
-let rec contains value tree =
+let rec contains (value: 'a) (tree: 'a binary_search_tree) : bool =
   match tree with
   | Empty -> false
   | Node (left, v, right) ->
@@ -81,13 +82,13 @@ let rec contains value tree =
       else contains value right
 
 (* Returns an in-order traversal of a binary search tree as a list. *)
-let rec inorder tree =
+let rec inorder (tree: 'a binary_search_tree) : 'a list=
   match tree with
   | Empty -> []
   | Node (left, v, right) -> inorder left @ [ v ] @ inorder right
 
 (* Inserts a value into a binary search tree. *)
-let rec insert value tree =
+let rec insert (value: 'a) (tree: 'a binary_search_tree) : 'a binary_search_tree =
   match tree with
   | Empty -> Node (Empty, value, Empty)
   | Node (left, v, right) ->
