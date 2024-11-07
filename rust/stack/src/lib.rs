@@ -4,17 +4,42 @@ pub struct Stack<T> {
 }
 
 impl<T> Stack<T> {
-    // Implement new
+    // Constructor function to create a new Stack instance
+    // Returns: A new Stack with an empty Vec<T>
+    pub fn new() -> Self {
+        Stack { items: Vec::<T>::new() }
+    }
 
-    // Implement push
+    // Pushes an item onto the stack
+    // Parameters:
+    //   item: The value to be added to the stack
+    pub fn push(&mut self, item: T) {
+        self.items.push(item)
+    }
 
-    // Implement pop
+    // Pops the top item off the stack
+    // Returns: Option<T> containing the item if the stack is not empty, None otherwise
+    pub fn pop(&mut self) -> Option<T> {
+        return self.items.pop()
+    }
 
-    // Implement peek
+    // Peeks at the top item on the stack without removing it
+    // Returns: Option<&T> containing a reference to the top item, or None if the stack is empty
+    pub fn peek(&mut self) -> Option<&T> {
+        return self.items.last()
+    }
 
-    // Implement is_empty
+    // Checks if the stack is empty
+    // Returns: true if the stack is empty, false otherwise
+    pub fn is_empty(&mut self) -> bool {
+        return self.items.is_empty()
+    }
 
-    // Implement len
+    // Returns the number of items currently on the stack
+    // Returns: The length of the stack (number of items)
+    pub fn len(&mut self) -> usize {
+        return self.items.len()
+    }
 }
 
 #[cfg(test)]
