@@ -1,5 +1,4 @@
 pub struct Stack<T> {
-    // stack items are private by default
     items: Vec<T>,
 }
 
