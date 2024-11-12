@@ -2,62 +2,64 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define INITIAL_CAPACITY 16
+
+// A structure representing a stack of strings.
 struct _Stack {
+    // Array of strings in the stack.
     char** elements;
+    // The stack's current capacity.
     int cap;
+    // Index of the top-most element of the stack. -1 represents an empty stack.
     int top;
 };
 
-// Create() function to initialize a stack returning the appropriate response
+// Initializes a new stack, returning a response containing the new stack if successful.
 stack_response create() {
     stack_response response = {success, NULL};
 
-    // Allocating stack struct
-    stack s = malloc(sizeof(struct _Stack));
+    // Allocate a new stack.
+    const stack s = malloc(sizeof(struct _Stack));
 
-    // Unable to create due to lack of memory
     if (s == NULL) {
         response.code = out_of_memory;
         return response;
     }
 
-    /*
-     * Following code uses the arrow operator. It's functionally the same as writing
-     * (*s).cap aka. it gets the member called cap from the struct s.
-     * https://stackoverflow.com/questions/2575048/arrow-operator-usage-in-c
-     * We can delete this before the deadline I'm including it for you chumps.
-     */ 
-    s->cap = 8;
-    s->elements = malloc(s->cap * sizeof(char*));
+    // Initialize stack size.
+    s->cap = INITIAL_CAPACITY;
+    s->elements = malloc(INITIAL_CAPACITY * sizeof(char*));
 
-    if (s->elements == NULL) { // Unable to assign space due to memory
-        free(s); // Free the memory assigned for struct
+    // Ensure we have enough memory for the initial stack allocation.
+    if (s->elements == NULL) {
+        free(s);
         response.code = out_of_memory;
         return response;
     }
 
-    s->top = -1; // Empty stack
+    s->top = -1;
     response.stack = s;
     return response;
 }
 
-// Returns the size of the stack
+// The number of elements currently in the given stack.
 int size(const stack s) {
     return s->top + 1;
 }
 
-// Easier to read way to check if the stack is empty
+// True if the given stack contains 0 elements.
 bool is_empty(const stack s) {
     return s->top == -1;
 }
 
-// Returns if the stack is full or not
+// True if the given stack has reached its super maximum and can no longer push new elements.
 bool is_full(const stack s) {
-    return size(s) == MAX_CAPACITY;
+    return (s->top + 1) == MAX_CAPACITY;
 }
 
+// Tries to push a new string onto the given stack.
 response_code push(stack s, char* item) {
-    if (strlen(item) >= MAX_ELEMENT_BYTE_SIZE) { // Pushing an item too big
+    if (strlen(item) >= MAX_ELEMENT_BYTE_SIZE) {
         return stack_element_too_large;
     }
 
@@ -65,31 +67,28 @@ response_code push(stack s, char* item) {
         return stack_full;
     }
 
-    // Resizing array if trying to push beyond capacity
-    if (s->top + 1 == s->cap) {
-        int new_cap = s->cap * 2; // Doubling it for the reasons
-        if (new_cap > MAX_CAPACITY) { // Exceeding the allocated capacity, limit it
-            new_cap = MAX_CAPACITY;
-        }
-
+    // Expand the stack's array allocation if it's at its current capacity.
+    if ((s->top + 1) == s->cap) {
+        // Double the array's allocation.
+        int new_cap = s->cap * 2;
         char** new_elements = realloc(s->elements, new_cap * sizeof(char*));
-        if (new_elements == NULL) { // Not enough memory, couldn't allocate
+
+        if (new_elements == NULL) {
             return out_of_memory;
         }
 
-        // Assign the new capacity and elements back to the stack
         s->elements = new_elements;
         s->cap = new_cap;
     }
 
-    // This is what defensively copying is apparently
-    char* defensive_copy = _strdup(item);
-    if (defensive_copy == NULL) {
+    // Add the string by copy, not reference.
+    char* item_to_push = _strdup(item);
+    if (item_to_push == NULL) {
         return out_of_memory;
     }
 
     s->top++;
-    s->elements[s->top] = defensive_copy;
+    s->elements[s->top] = item_to_push;
     return success;
 }
 
