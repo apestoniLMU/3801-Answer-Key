@@ -83,7 +83,7 @@ response_code push(stack s, char* item) {
     }
 
     // This is what defensively copying is apparently
-    char* defensive_copy = strdup(item);
+    char* defensive_copy = _strdup(item);
     if (defensive_copy == NULL) {
         return out_of_memory;
     }
