@@ -92,6 +92,7 @@ response_code push(stack s, char* item) {
     return success;
 }
 
+// Pops the top element from the given stack, returning the popped element if successful.
 string_response pop(stack s) {
     string_response response = {stack_empty, NULL};
 
@@ -99,17 +100,18 @@ string_response pop(stack s) {
         return response;
     }
 
-    // Returning the top string
     response.string = s->elements[s->top];
     s->elements[s->top] = NULL;
     s->top--;
     response.code = success;
 
-    // If the array gets too small (<25%), shrink it.
-    if (s->top + 1 < s->cap / 4 && s->cap > 8) { // We don't want to go below the initial size
+    // Shrink the array's allocation if its size falls below a threshold (1/4 capacity).
+    if (s->cap > INITIAL_CAPACITY && s->top + 1 < (s->cap / 4)) {
         int new_cap = s->cap / 2;
         char** new_elements = realloc(s->elements, new_cap * sizeof(char*));
-        if (new_elements != NULL) { // If we can't realloc don't touch the stack components.
+
+        // Ensure we have enough space for the reallocation before updating moving the array.
+        if (new_elements != NULL) {
             s->elements = new_elements;
             s->cap = new_cap;
         }
@@ -118,18 +120,25 @@ string_response pop(stack s) {
     return response;
 }
 
+// Frees the stack and all of its elements.
 void destroy(stack* s) {
-    if (s == NULL || *s == NULL) { // If either the stack or the pointer is null
-        return; // Abort
+    // NOTE: We should really be doing checks like this at the start of every operation, but an appropriate response
+    // code wasn't given (e.g. "invalid_stack").
+    if (s == NULL || *s == NULL) {
+        return;
     }
 
-    // Free the elements (no memory leaks, very demure)
-    for (int i = 0; i <= (*s)->top; i++) { // We added the * since it's a reference being passed, not the stack
+    // Free every item in the stack.
+    for (int i = 0; i <= (*s)->top; i++) {
         free((*s)->elements[i]);
     }
 
-    // Now free the array, then the struct
+    // Free the stack array.
     free((*s)->elements);
+
+    // Free the stack.
     free(*s);
-    *s = NULL; // Dangling pointer prevention, FireFox should take notes
+
+    // We're now pointing to a null object.
+    *s = NULL;
 }
