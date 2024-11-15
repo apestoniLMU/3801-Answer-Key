@@ -42,9 +42,9 @@ This assignment re-implements 4 previous exercises—using new paradigms—and 1
 * **Shape:** A variant data type representing a three-dimensional geometric shape, which implements methods for calculating volume and surface area. Implemented variants are `Box` and `Sphere`. 
 * **Binary Search Tree:** A simple binary search tree with similar functionality to the one implemented in homework 2. Implemented as an algebraic data type, rather than classes or structures.
 
-## Homework 4:
+### Homework 4:
 
-This assignment follows a single exercise in C, C++, and Rust: the implementation of a stack as a dynamically sized array. This data structure is implemented as a generic class in C++ and Rust, while the C implementation uses strings. In all languages, the stack structure supports `push` and `pop` operations, as well as functions for checking whether the stack is empty or full. The C and C++ implementations dynamically reallocate the size of the structure's internal array to grow and shrink to best fit the current number of elements; the Rust implementation wraps a vector that handles resizing automatically.
+This assignment follows a single exercise in C, C++, and Rust: the implementation of a stack as a dynamically sized array. This data structure is implemented generically in C++ and Rust, while the C implementation uses strings. In all languages, the stack structure supports `push` and `pop` operations, as well as functions for checking whether the stack is empty or full. The C and C++ implementations dynamically reallocate the size of the structure's internal array to grow and shrink to best fit the current number of elements; the Rust implementation wraps a vector that handles resizing automatically, while also implementing a `peek` function.
 
 ------
 
