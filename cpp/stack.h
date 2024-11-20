@@ -29,23 +29,23 @@ private:
 
     // 1 greater than the maximum number of items this stack can contain before requiring reallocation. When the value
     // of top reaches this, the stack will need to be expanded before another element can be pushed.
-    size_t capacity = INITIAL_CAPACITY;
+    size_t capacity;
 
     // The next available index in the stack (i.e. 1 greater than the index of the current top-most element).
-    size_t top = 0;
+    size_t top;
+
+    // Disable copying and assignment.
+    Stack(const Stack&) = delete;
+    Stack& operator=(const Stack&) = delete;
 
 public:
 
     // Default constructor. Initializes stack size to INITIAL_CAPACITY.
-    Stack() {
-        elements = std::make_unique<T[]>(INITIAL_CAPACITY);
+    Stack() :
+        top(0),
+        capacity(INITIAL_CAPACITY),
+        elements(std::make_unique<T[]>(INITIAL_CAPACITY)) {
     }
-
-    // Disable move and copy semantics.
-    Stack(const Stack&) = delete;
-    Stack(Stack&&) = delete;
-    Stack& operator=(const Stack&) = delete;
-    Stack& operator=(Stack&&) = delete;
 
     // The number of elements currently in this stack.
     size_t size() const {
@@ -63,33 +63,32 @@ public:
         return top == MAX_CAPACITY;
     }
 
-    // Push an element onto the stack.
-    void push(T element) {
+    // Push an item onto the stack.
+    void push(T item) {
+        if (top == MAX_CAPACITY) {
+            throw overflow_error("Stack has reached maximum capacity");
+        }
+
         reallocate(top + 1);
-        elements[top] = element;
-        top++;
+        elements[top++] = item;
     }
 
-    // Pops the top element off the stack and returns it.
+    // Pops the top item off the stack and returns it.
     T pop() {
         if (is_empty()) {
             throw underflow_error("cannot pop from empty stack");
         }
 
-        T element = elements[top - 1];
-        top--;
+        T item = elements[--top];
+        elements[top] = T();          // Reset top element for security.
         reallocate(top);
-        return element;
+        return item;
     }
 
 private:
 
     // Expands or shrinks the stack's allocation when necessary to best fit the desired size.
     void reallocate(size_t desired_size) {
-        if (desired_size > MAX_CAPACITY) {
-            throw overflow_error("Stack has reached maximum capacity");
-        }
-
         // Reallocate the array with twice the space if its current capacity is exceeded.
         if (desired_size > capacity) {
             std::unique_ptr<T[]> new_elements = std::make_unique<T[]>(capacity * 2);
