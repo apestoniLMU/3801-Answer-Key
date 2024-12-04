@@ -46,9 +46,15 @@ This assignment re-implements 4 previous exercises—using new paradigms—and 1
 
 This assignment follows a single exercise in C, C++, and Rust: the implementation of a stack as a dynamically sized array. This data structure is implemented generically in C++ and Rust, while the C implementation uses strings. In all languages, the stack structure supports `push` and `pop` operations, as well as functions for checking whether the stack is empty or full. The C and C++ implementations dynamically reallocate the size of the structure's internal array to grow and shrink to best fit the current number of elements; the Rust implementation wraps a vector that handles resizing automatically, while also implementing a `peek` function.
 
-------
+### Homework 5:
 
+This assignment implements a single exercise in Go: a restaurant simulation. The program consists of 3 `Cook`s, 1 `waiter`, and 10 `Customer`s, each performing their tasks in an independent goroutine.
 
+When the program begins, the `Customer`s enter the restaurant. Each `Customer` attempts to place a meal order with the `waiter`, who brings the order to an available `Cook`, who makes the meal. Once the meal is cooked, it is given to the `Customer` who ordered it. The `Customer` eats the meal, then places another order. After a `Customer` finishes 5 meals, they leave the restaurant. When all `Customers` have left, the restaurant closes and the program ends.
+
+Each `Cook` can only prepare one meal at a time. If all `Cook`s are busy preparing meals, the `waiter` will wait, holding onto each outstanding order, until a `Cook` becomes available. The `waiter` can only hold 3 outstanding orders at a time. If the `waiter` cannot hold any additional orders when a `Customer` attempts to place an order, the `Customer` will wait for the `waiter` to become available again. After a certain duration, if the `waiter` has not become available, the `Customer` will abandon their order, leave the restaurant, and return later to try again.
+
+All `Customer`s will *always* complete all 5 of their meals *eventually*, meaning the program will always end successfully.
 
 ## Testing Instructions
 ### Lua
